@@ -1,0 +1,40 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+        //为了使用android.support.v8.renderscript包
+        renderscriptTargetApi 18
+        renderscriptSupportModeEnabled true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile rootProject.ext.dependencies.supportV7
+    compile rootProject.ext.dependencies.leanback
+    compile rootProject.ext.dependencies.okhttputils
+    compile rootProject.ext.dependencies.gson
+    compile rootProject.ext.dependencies.glide
+    compile rootProject.ext.dependencies.glidetransformations
+    compile rootProject.ext.dependencies.recyclerviewV7
+    compile rootProject.ext.dependencies.okhttp
+    compile files('libs/nineoldandroids-2.4.0.jar')
+    compile project(':androidTvWidget')
+}
+

@@ -1,0 +1,58 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.antfortune.freeline'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        applicationId "com.ashank.animation"
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        releaseConfig {
+            keyAlias 'mvp'
+            keyPassword '123456'
+            storeFile file('mvp.jks')
+            storePassword '123456'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            //Zipalign优化
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //设置签名(不设置会导致apk无签名)
+            signingConfig signingConfigs.releaseConfig
+        }
+    }
+
+    freeline{
+        hack true
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    //freeline
+    debugCompile rootProject.ext.dependencies.freelinedebugCompile
+    releaseCompile rootProject.ext.dependencies.freeline
+    testCompile rootProject.ext.dependencies.freeline
+    //anfix
+    compile rootProject.ext.dependencies.andfix
+
+    compile project(':zlibrary')
+
+    testCompile 'junit:junit:4.12'
+}

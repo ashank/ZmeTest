@@ -1,0 +1,204 @@
+apply plugin: 'com.android.application'
+//添加kotlin插件
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+//添加greenDao插件
+apply plugin: 'org.greenrobot.greendao'
+
+//greendao 指定gen的目录，跑完之后会自动生成三个类
+greendao {
+    schemaVersion 1 //指定数据库schema版本号，迁移等操作会用到
+    daoPackage 'com.funhotel.hmvp.gen' //通过gradle插件生成的数据库相关文件的包名
+    targetGenDir 'src/main/java'//将生成的文件放到我们的java目录中
+}
+
+//获取local.properties的内容
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+//生成时间
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    //用于调用so文件使用，指定so文件的目录，默认是jniLibs，如果需要改变，在[]中写入so文件的路径
+    sourceSets {
+        main {
+            //jniLibs.srcDirs = ['src/main/jniLibs']
+            jni.srcDirs = []
+            res.srcDirs = ['src/main/res', 'src/main/res/menu']
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.funhotel.hmvp"
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        flavorDimensions "versionCode"
+
+        //配置生成的 BuildConfig 文件中的常量，代码引用直接，gradle之后，最终的值可以在BuildConfig文件中看到
+        //可用于区分测试和正式环境的地址
+        /* buildConfigField('String', 'LOG_TAG', "LOG_TAG")// http日志tag
+        buildConfigField('String', 'LOG_TAG_HTTP', "LOG_TAG_HTTP")// http日志tag
+        buildConfigField('String', 'LOG_TAG_WEB', "LOG_TAG_WEB")// web日志tag*/
+
+        //dex突破65535的限制
+        multiDexEnabled true
+
+
+    }
+
+    signingConfigs {
+        releaseConfig {
+            storeFile file(properties.getProperty("keystroe_storeFile"))
+            storePassword properties.getProperty("keystroe_storePassword")
+            keyAlias properties.getProperty("keystroe_keyAlias")
+            keyPassword properties.getProperty("keystroe_keyPassword")
+        }
+    }
+
+    /*编译类型
+    //其中debug, release是gradle默认自带的两个build type， 当然你可以定义其他类型。
+    //可以针对不停编译的版本中配置不同的参数，比如混淆、签名等。preview*/
+    buildTypes {
+
+        debug {
+            //debug模式下，显示log
+            buildConfigField("boolean", "LOG_DEBUG", "true")
+            debuggable false // 是否保留调试信息
+            minifyEnabled false //是否混淆
+            zipAlignEnabled false // 包优化
+            shrinkResources false // 移除不必要的资源
+            //签名
+            signingConfig signingConfigs.releaseConfig
+        }
+
+        release {
+            // releasw 模式下，关闭log
+            buildConfigField("boolean", "LOG_DEBUG", "false")
+            minifyEnabled true //是否混淆
+            zipAlignEnabled true // 包优化
+            shrinkResources true // 移除不必要的资源
+            // 代码混淆规则文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            //批量打包
+            applicationVariants.all { variant ->
+                variant.outputs.all { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        //输出apk名称为：渠道名_版本名_时间.apk
+                        outputFileName = "${variant.productFlavors[0].name}_v${defaultConfig.versionName}_${releaseTime()}.apk"
+                    }
+                }
+            }
+
+
+        }
+
+    }
+
+    // 为了解决部分第三方库重复打包了META-INF的问题
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/rxjava.properties'
+    }
+
+    //项目重新构建导致重复了.so库,需要过滤
+    /*packagingOptions {
+        exclude 'lib/armeabi-v7a/libRSSupport.so'
+        exclude 'lib/arm64-v8a/libRSSupport.so'
+        exclude 'lib/armeabi-v7a/librsjni.so'
+        exclude 'lib/x86/libRSSupport.so'
+        exclude 'lib/x86_64/libRSSupport.so'
+        exclude 'lib/mips/libRSSupport.so'
+        exclude 'lib/mips/librsjni.so'
+        exclude 'lib/arm64-v8a/librsjni.so'
+        exclude 'lib/x86/librsjni.so'
+        exclude 'lib/x86_64/librsjni.so'
+    }*/
+
+    //分割apk代码
+    /*splits {
+        density {
+            enable true
+            exclude 'ldpi', 'mdpi'
+            compatibleScreens 'normal', 'large', 'xlarge'
+        }
+
+         abi {
+            enable true
+            reset()
+            include 'x86', 'armeabi-v7a'
+            universalApk true
+        }
+    }*/
+
+    //移除lint检测的error
+    lintOptions {
+        abortOnError false
+    }
+
+    // 多渠道打包代码
+    productFlavors {
+
+        baidu {
+            // 每个环境包名不同
+            applicationId "com.funhotel.hmvp"
+            // 动态添加 string.xml 字段；
+            // 注意，这里是添加，在 string.xml 不能有这个字段，会重名！！！
+            resValue "string", "app_name", "ZME"
+            resValue "bool", "auto_updates", 'false'
+            // 动态修改 常量字段
+            buildConfigField "String", "ENVIRONMENT", '"我是ZME版本"'
+            // 修改 AndroidManifest.xml 里渠道变量和对应app的icon，一般是友盟渠道
+            manifestPlaceholders = [CHANNEL_VALUE: "baidu", app_icon: "@mipmap/logo_baidu"]
+        }
+
+    }
+}
+
+dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+    compile project(':zlibrary')
+
+    //ViewModel and LiveData
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+    // alternatively, just ViewModel
+    implementation "android.arch.lifecycle:viewmodel:1.1.1"
+    // alternatively, just LiveData
+    implementation "android.arch.lifecycle:livedata:1.1.1"
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+
+
+}
+
+//多个library时
+configurations.all {
+
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            if (!requested.name.startsWith("multidex")) {
+                details.useVersion '26.0.1'//默认使用的版本
+            }
+        }
+    }
+}

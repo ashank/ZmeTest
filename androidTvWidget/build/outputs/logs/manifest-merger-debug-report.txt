@@ -1,0 +1,43 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml:2:1-34:12
+INJECTED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml:2:1-34:12
+INJECTED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml:2:1-34:12
+INJECTED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml:2:1-34:12
+INJECTED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml:2:1-34:12
+INJECTED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml:2:1-34:12
+INJECTED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml:2:1-34:12
+	package
+		ADDED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml:3:11-45
+		INJECTED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml
+		INJECTED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml
+	android:versionName
+		ADDED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml:5:11-38
+		INJECTED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml
+		INJECTED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml:2:11-69
+	android:versionCode
+		ADDED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml:4:11-34
+		INJECTED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml
+		INJECTED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml
+uses-sdk
+ADDED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml:7:5-9:40
+INJECTED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml:7:5-9:40
+INJECTED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml:7:5-9:40
+INJECTED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml:7:5-9:40
+INJECTED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml:7:5-9:40
+	android:targetSdkVersion
+		ADDED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml:9:9-38
+		INJECTED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml
+		INJECTED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		ADDED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml:8:9-35
+		INJECTED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml
+		INJECTED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml
+application
+ADDED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml:11:5-32:19
+	android:label
+		ADDED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml:13:9-41
+	android:allowBackup
+		ADDED from /Users/zhiyahan/AndroidStudioProjects/Hmvp/androidTvWidget/src/main/AndroidManifest.xml:12:9-35

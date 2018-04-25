@@ -1,0 +1,53 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:id="@+id/fl"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.funhotel.hmvp.ui.activity.WelcomeActivity">
+
+
+    <!--<com.zme.zlibrary.widget.DrapView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+        <TextView
+          android:id="@+id/tv2"
+          android:background="@color/color_FF7F00"
+          android:layout_width="@dimen/px400"
+          android:text="@string/common_google_play_services_enable_button"
+          android:layout_height="@dimen/px400"/>
+
+        <TextView
+          android:id="@+id/tv1"
+          android:background="@color/color_013c6e"
+          android:layout_width="@dimen/px400"
+          android:layout_height="@dimen/px400"
+          android:text="@string/common_google_play_services_enable_button"/>
+
+    </com.zme.zlibrary.widget.DrapView>-->
+
+
+
+
+    <TextView
+        android:id="@+id/fullscreen_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:text="@string/dummy_content"
+        android:textColor="@color/color_013c6e"
+        android:textSize="40sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="16dp"
+        android:gravity="center_horizontal"
+        android:text=" Copyright © 1999-2011 zme. All rights reserved. "
+        android:textColor="@color/color_ffffff"
+        android:textSize="10sp"/>
+</FrameLayout>

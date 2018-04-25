@@ -64,6 +64,7 @@ public class NewListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
   public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     itemView = LayoutInflater.from(mContext).inflate(R.layout.item_new_list, parent,
         false);
+
     return new MyViewHolder(itemView, mOnItemClickListner);
   }
 

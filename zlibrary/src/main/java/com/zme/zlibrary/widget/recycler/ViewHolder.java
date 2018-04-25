@@ -22,7 +22,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 /**
- * Description ：公共万能的ViewHolder
+ * Description ：公共ViewHolder
  * Author：ZME
  * Create Time ：2018/4/25 22:21
  * Modify Time：2018/4/25 22:21
@@ -32,39 +32,44 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 
   private SparseArray<View> views;
   private Context mContext;
-  private View mConvertView;
-
+  private View itemView;
 
   public ViewHolder(Context context, View itemView) {
     super(itemView);
     this.mContext = context;
+    views = new SparseArray<>();
   }
 
 
-  public static ViewHolder createViewHolder(Context context, View itemView) {
-    return new ViewHolder(context, itemView);
+
+  public  ViewHolder createViewHolder(Context context, View itemView) {
+    if (itemView==null){
+      ViewHolder holder = new ViewHolder(context, itemView);
+      itemView.setTag(this);
+      this.itemView = itemView;
+      return holder;
+    }else {
+      ViewHolder holder = (ViewHolder)itemView.getTag();
+      return holder;
+    }
   }
 
-
-  public static ViewHolder createViewHolder(Context context, ViewGroup parent, int layoutId) {
+  public  ViewHolder createViewHolder(Context context, ViewGroup parent, int layoutId) {
     View itemView = LayoutInflater.from(context).inflate(layoutId, parent, false);
-    return new ViewHolder(context, itemView);
+    return  createViewHolder(context,itemView);
   }
-
-  ;
 
   public <T extends View> T getView(int viewId) {
-
     View view = views.get(viewId);
     if (view == null) {
-      view = mConvertView.findViewById(viewId);
+      view = itemView.findViewById(viewId);
       views.put(viewId, view);
     }
     return (T) view;
   }
 
-  public View getmConvertView() {
-    return mConvertView;
+  public View getItemView() {
+    return itemView;
   }
 
 
@@ -201,6 +206,61 @@ public class ViewHolder extends RecyclerView.ViewHolder {
   public ViewHolder setChecked(int viewId, boolean checked) {
     Checkable view = (Checkable) getView(viewId);
     view.setChecked(checked);
+    return this;
+  }
+
+
+  public ViewHolder setOnClickListener(int viewId,
+      View.OnClickListener listener) {
+    View view = getView(viewId);
+    view.setOnClickListener(listener);
+    return this;
+  }
+
+  public ViewHolder setOnTouchListener(int viewId,
+      View.OnTouchListener listener) {
+    View view = getView(viewId);
+    view.setOnTouchListener(listener);
+    return this;
+  }
+
+  public ViewHolder setOnLongClickListener(int viewId,
+      View.OnLongClickListener listener) {
+    View view = getView(viewId);
+    view.setOnLongClickListener(listener);
+    return this;
+  }
+
+  /**
+   * ItemView 的长按事件
+   *
+   * @param listener {@link android.view.View.OnLongClickListener}
+   * @return ViewHolder
+   */
+  public ViewHolder setOnLongClickListener(View.OnLongClickListener listener) {
+    itemView.setOnLongClickListener(listener);
+    return this;
+  }
+
+  /**
+   * ItemView 的触摸事件
+   *
+   * @param listener {@link android.view.View.OnTouchListener}
+   * @return ViewHolder
+   */
+  public ViewHolder setOnTouchListener(View.OnTouchListener listener) {
+    itemView.setOnTouchListener(listener);
+    return this;
+  }
+
+  /**
+   * ItemView 的点击事件
+   *
+   * @param listener {@link android.view.View.OnClickListener}
+   * @return ViewHolder
+   */
+  public ViewHolder setOnClickListener(View.OnClickListener listener) {
+    itemView.setOnClickListener(listener);
     return this;
   }
 

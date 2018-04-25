@@ -16,7 +16,9 @@
 
 package com.zme.zlibrary.widget.recycler;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.ViewGroup;
 import java.util.List;
 
 /**
@@ -26,9 +28,11 @@ import java.util.List;
  * Modify Time：2018/4/22 22:38
  * Version：1.0
  */
-public abstract class BaseCommAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
+public abstract class BaseCommAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 
+  private Context mContext;
   private List<T> mDatas;
+  private int layoutId;
 
   public BaseCommAdapter(List<T> mDatas) {
     this.mDatas = mDatas;
@@ -50,4 +54,20 @@ public abstract class BaseCommAdapter<T> extends RecyclerView.Adapter<BaseViewHo
     return super.getItemViewType(position);
   }
 
+  @Override
+  public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+    return null;
+  }
+
+  @Override
+  public void onBindViewHolder(ViewHolder holder, int position) {
+    if (null == mDatas || mDatas.isEmpty()) {
+      return;
+    }
+    //绑定数据和视图
+    binViewHolder(holder,mDatas.get(position));
+  }
+
+  public abstract void binViewHolder(ViewHolder viewHolder,T t);
 }

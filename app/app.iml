@@ -98,13 +98,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/baidu/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/baidu/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/baidu/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testBaidu/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testBaidu/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testBaidu/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testBaidu/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testBaidu/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testBaidu/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testBaidu/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestBaidu/res" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestBaidu/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestBaidu/assets" type="java-test-resource" />
@@ -112,6 +105,13 @@
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestBaidu/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestBaidu/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestBaidu/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testBaidu/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testBaidu/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testBaidu/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testBaidu/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testBaidu/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testBaidu/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testBaidu/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" type="java-resource" />
@@ -163,6 +163,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/javaPrecompile" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jniLibs" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/lint" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifests" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/multi-dex" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/prebuild" />
@@ -202,10 +203,10 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support:multidex-instrumentation-1.0.2" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-annotations:26.0.1@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:3.8.0@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/zhiyahan/AndroidStudioProjects/Hmvp/zlibrary/libs/nineoldandroids-2.4.0.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.bumptech.glide:glide:3.7.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: android.arch.lifecycle:runtime-1.1.1" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-basement-10.2.1" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:/Users/zhiyahan/AndroidStudioProjects/ZmeTest/zlibrary/libs/nineoldandroids-2.4.0.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.jakewharton:butterknife-annotations:8.5.1@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.trello:rxlifecycle:1.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okio:okio:1.13.0@jar" level="project" />

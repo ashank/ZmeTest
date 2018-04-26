@@ -27,7 +27,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.Toast;
 import com.funhotel.hmvp.R;
-import com.funhotel.hmvp.adapter.MainRecyclerViewAdapter;
+import com.funhotel.hmvp.adapter.MainListAdapter;
 import com.funhotel.hmvp.test.jni.JniDemo;
 import com.funhotel.hmvp.ui.activity.presentation.PresentationActivity;
 import com.zme.zlibrary.base.BaseActivity;
@@ -143,11 +143,13 @@ public class MainActivity extends BaseActivity implements OnItemClickListner,
     mRecyclerView.setLayoutManager(mLayoutManager);
     //分隔符
     /*mRecyclerView.addItemDecoration(new Line(this,Line.VERTICAL_LIST));*/
-    MainRecyclerViewAdapter recyclerViewAdapter = new MainRecyclerViewAdapter(this,
-        list, this);
     //优化性能，设置ture 固定宽高，避免重新计算
     //mRecyclerView.setHasFixedSize(true);
-    mRecyclerView.setAdapter(recyclerViewAdapter);
+//   mRecyclerView.setAdapter(recyclerViewAdapter);
+    MainListAdapter adapter=new MainListAdapter(this,list);
+    adapter.setOnItemClickListener(this);
+    mRecyclerView.setAdapter(adapter);
+
     mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
       @Override
       public void onScrollStateChanged(RecyclerView recyclerView, int newState) {

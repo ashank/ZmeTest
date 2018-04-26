@@ -10,10 +10,10 @@ import io.reactivex.functions.Function;
  */
 public  class HttpResultFunction<T> implements Function<BaseEntity<T>, T> {
 
-  private static final int HTTP_STATUS=200;
+
   @Override
   public T apply(BaseEntity<T> baseEntity) throws Exception {
-    if (baseEntity.getStatus() != HTTP_STATUS) {
+    if (baseEntity.getStatus() != HttpConstant.HTTP_SUCCESS_STATUS) {
       throw new ApiException(baseEntity.getStatus(), "apiException:"+baseEntity.getMessage());
     }
     return baseEntity.getData();

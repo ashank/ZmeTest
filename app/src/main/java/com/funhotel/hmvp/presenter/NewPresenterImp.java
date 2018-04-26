@@ -53,7 +53,7 @@ public class NewPresenterImp implements NewPresenter {
         if (null == entity) {
           LogUtils.e("entity为空");
           if (null != view) {
-            newViewModel.bindData(null);
+            view.bindData(null);
           }
           return;
         }
@@ -62,18 +62,20 @@ public class NewPresenterImp implements NewPresenter {
         if (null == anew) {
           LogUtils.e("New为空");
           if (null != view) {
-            newViewModel.bindData(null);
+            view.bindData(null);
           }
           return;
         }
         if (null != view) {
-          newViewModel.bindData(anew);
+          view.bindData(anew);
         }
       }
-
       @Override
       public void onFailure(Call<NewEntity> call, Throwable t) {
-        newViewModel.bindData(null);
+        if (null!=view){
+          view.bindData(null);
+        }
+
       }
     });
   }

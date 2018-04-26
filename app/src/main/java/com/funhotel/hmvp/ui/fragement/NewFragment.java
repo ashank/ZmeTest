@@ -28,7 +28,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.funhotel.hmvp.R;
-import com.funhotel.hmvp.adapter.NewListAdapter;
+import com.funhotel.hmvp.adapter.NewAdapter;
 import com.funhotel.hmvp.model.entity.New;
 import com.funhotel.hmvp.model.entity.NewEntity.ResultEntity;
 import com.funhotel.hmvp.model.viewmodel.NewViewModel;
@@ -37,6 +37,7 @@ import com.zme.zlibrary.utils.LogUtils;
 import com.zme.zlibrary.widget.AutoLoadMoreRecylerView;
 import com.zme.zlibrary.widget.AutoLoadMoreRecylerView.ILoadMoreListener;
 import com.zme.zlibrary.widget.recycler.OnItemClickListner;
+import com.zme.zlibrary.widget.recycler.SuperBaseAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,7 +61,7 @@ public class NewFragment extends Fragment implements OnRefreshListener,NewViewMo
   private AutoLoadMoreRecylerView recyclerView;
   private LinearLayoutManager linearLayoutManager;
   private SwipeRefreshLayout swipeRefreshLayout;
-  private NewListAdapter recyclerViewAdapter;
+  private SuperBaseAdapter adapter;
   private New aNew;
 
   private NewPresenterImp presenterImp;
@@ -105,50 +106,11 @@ public class NewFragment extends Fragment implements OnRefreshListener,NewViewMo
 
   @Override
   public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-
+    super.onActivityCreated(savedInstanceState);
     setupRefreshLayout();
     setupRecyclerView();
-
     presenterImp=new NewPresenterImp(type);
     presenterImp.attachView(this);
-
-    /*HttpManager httpManager = HttpManager.getInstance(HttpConstant.BASE_URL);
-//    httpManager.getNews(type, new NewResourceSubscriber());
-    httpManager.getNewA(type, new Callback<NewEntity>() {
-      @Override
-      public void onResponse(Call<NewEntity> call, Response<NewEntity> response) {
-
-        NewEntity entity = response.body();
-        if (null == entity) {
-          LogUtils.e("entity为空");
-          return;
-        }
-        LogUtils.e("entity==" + entity.getReason() + ">>>>>" + entity.getError_code());
-        NewEntity.ResultEntity anew = entity.getResult();
-        if (null == anew) {
-          LogUtils.e("New为空");
-          return;
-        }
-        recyclerViewAdapter = new NewListAdapter(getActivity(),
-            anew, new OnItemClickListner() {
-          @Override
-          public void onItemClick(View view, int postion) {
-            LogUtils.e(">>>onItemClick>>>>"+postion);
-          }
-        });
-        //优化性能，设置ture 固定宽高，避免重新计算
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(recyclerViewAdapter);
-      }
-
-      @Override
-      public void onFailure(Call<NewEntity> call, Throwable t) {
-
-        LogUtils.e("fail----" + t.toString());
-      }
-    });*/
-
-    super.onActivityCreated(savedInstanceState);
   }
 
 
@@ -207,6 +169,7 @@ public class NewFragment extends Fragment implements OnRefreshListener,NewViewMo
             getResources().getColor(android.R.color.holo_red_light));
   }
 
+
   private void setupRecyclerView() {
     linearLayoutManager = new LinearLayoutManager(getContext());
     linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -234,8 +197,9 @@ public class NewFragment extends Fragment implements OnRefreshListener,NewViewMo
     if (aNew==null){
       return;
     }
-    recyclerViewAdapter = new NewListAdapter(getActivity(),
-        aNew, new OnItemClickListner() {
+
+    adapter=new NewAdapter(getActivity(),aNew.getData());
+    adapter.setOnItemClickListener(new OnItemClickListner() {
       @Override
       public void onItemClick(View view, int postion) {
         LogUtils.e(">>>onItemClick>>>>"+postion);
@@ -243,34 +207,7 @@ public class NewFragment extends Fragment implements OnRefreshListener,NewViewMo
     });
     //优化性能，设置ture 固定宽高，避免重新计算
     recyclerView.setHasFixedSize(true);
-    recyclerView.setAdapter(recyclerViewAdapter);
+    recyclerView.setAdapter(adapter);
   }
 
-  /*private class NewResourceSubscriber extends ResourceSubscriber<New> {
-
-    @Override
-    public void onNext(New aNew) {
-      LogUtils.e("onNext===" + aNew.toString());
-     *//* recyclerViewAdapter.setaNew(aNew);
-      recyclerView.postInvalidateOnAnimation();*//*
-    }
-
-    @Override
-    public void onError(Throwable t) {
-
-      LogUtils.e("onError===" + t.toString());
-    }
-
-    @Override
-    public void onComplete() {
-      LogUtils.e("onComplete===");
-    }
-
-    @Override
-    protected void onStart() {
-      LogUtils.e("onStart===");
-      super.onStart();
-    }
-
-  }*/
 }

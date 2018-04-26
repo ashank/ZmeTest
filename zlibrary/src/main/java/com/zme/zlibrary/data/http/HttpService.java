@@ -15,7 +15,7 @@ import retrofit2.http.Query;
  * Zhiyahan on 2017/3/24 接口调用
  */
 
-public interface HttpService<T> {
+public interface HttpService<T> extends ISuperHttpApi{
 
   @GET("/open/api/lunar/json.shtml")
   Flowable<BaseEntity<Calendar>> getCalendar(@Query("date") String date);
@@ -23,9 +23,6 @@ public interface HttpService<T> {
 
   @GET("/toutiao/index")
   Flowable<BaseEntity<Calendar>> getNew(@Query("type") String type);
-
-
-
 
 
 }

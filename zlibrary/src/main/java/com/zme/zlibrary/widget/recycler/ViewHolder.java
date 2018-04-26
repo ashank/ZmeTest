@@ -11,9 +11,11 @@ import android.os.Build.VERSION_CODES;
 import android.support.v7.widget.RecyclerView;
 import android.text.util.Linkify;
 import android.util.SparseArray;
-import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
+import android.view.View.OnTouchListener;
 import android.view.animation.AlphaAnimation;
 import android.widget.Checkable;
 import android.widget.ImageView;
@@ -34,30 +36,16 @@ public class ViewHolder extends RecyclerView.ViewHolder {
   private Context mContext;
   private View itemView;
 
+  private OnItemLongClickListner onItemLongClickListner;
+  private OnItemClickListner onItemClickListner;
+
   public ViewHolder(Context context, View itemView) {
     super(itemView);
     this.mContext = context;
     views = new SparseArray<>();
+    this.itemView=itemView;
   }
 
-
-
-  public  ViewHolder createViewHolder(Context context, View itemView) {
-    if (itemView==null){
-      ViewHolder holder = new ViewHolder(context, itemView);
-      itemView.setTag(this);
-      this.itemView = itemView;
-      return holder;
-    }else {
-      ViewHolder holder = (ViewHolder)itemView.getTag();
-      return holder;
-    }
-  }
-
-  public  ViewHolder createViewHolder(Context context, ViewGroup parent, int layoutId) {
-    View itemView = LayoutInflater.from(context).inflate(layoutId, parent, false);
-    return  createViewHolder(context,itemView);
-  }
 
   public <T extends View> T getView(int viewId) {
     View view = views.get(viewId);
@@ -68,10 +56,12 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     return (T) view;
   }
 
+
+
+
   public View getItemView() {
     return itemView;
   }
-
 
   /**
    * 设置TextView的值
@@ -141,6 +131,12 @@ public class ViewHolder extends RecyclerView.ViewHolder {
   public ViewHolder setVisible(int viewId, boolean visible) {
     View view = getView(viewId);
     view.setVisibility(visible ? View.VISIBLE : View.GONE);
+    return this;
+  }
+
+  public ViewHolder setVisible(int viewId, int visible) {
+    View view = getView(viewId);
+    view.setVisibility(visible);
     return this;
   }
 
@@ -226,19 +222,27 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 
   public ViewHolder setOnLongClickListener(int viewId,
       View.OnLongClickListener listener) {
-    View view = getView(viewId);
-    view.setOnLongClickListener(listener);
+      View view = getView(viewId);
+      view.setOnLongClickListener(listener);
     return this;
   }
 
   /**
    * ItemView 的长按事件
    *
-   * @param listener {@link android.view.View.OnLongClickListener}
+   * @param listener {@link OnItemLongClickListner}
    * @return ViewHolder
    */
-  public ViewHolder setOnLongClickListener(View.OnLongClickListener listener) {
-    itemView.setOnLongClickListener(listener);
+  public ViewHolder setOnItemLongClickListener(final OnItemLongClickListner listener, final int position) {
+    itemView.setOnLongClickListener(new OnLongClickListener() {
+      @Override
+      public boolean onLongClick(View v) {
+        if (listener!=null){
+          listener.onItemLongClick(getItemView(),position);
+        }
+        return true;
+      }
+    });
     return this;
   }
 
@@ -248,20 +252,42 @@ public class ViewHolder extends RecyclerView.ViewHolder {
    * @param listener {@link android.view.View.OnTouchListener}
    * @return ViewHolder
    */
-  public ViewHolder setOnTouchListener(View.OnTouchListener listener) {
-    itemView.setOnTouchListener(listener);
+  public ViewHolder setOnItemTouchListener(final OnItemTouchListener listener, final int position) {
+    itemView.setOnTouchListener(new OnTouchListener() {
+      @Override
+      public boolean onTouch(View v, MotionEvent event) {
+        if (listener!=null){
+          listener.onItemTouch(getItemView(),event,position);
+        }
+        return false;
+      }
+    });
     return this;
   }
 
   /**
    * ItemView 的点击事件
-   *
    * @param listener {@link android.view.View.OnClickListener}
    * @return ViewHolder
    */
-  public ViewHolder setOnClickListener(View.OnClickListener listener) {
-    itemView.setOnClickListener(listener);
+  public ViewHolder setOnItemClickListener(final OnItemClickListner listener, final int position) {
+    itemView.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (listener!=null){
+          listener.onItemClick(getItemView(),position);
+        }
+      }
+    });
     return this;
+  }
+
+
+  public void recycleView(){
+    if (views!=null){
+      views.clear();
+      views=null;
+    }
   }
 
 

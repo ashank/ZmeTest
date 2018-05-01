@@ -8,8 +8,9 @@ import com.bumptech.glide.Glide;
 import com.funhotel.hmvp.R;
 import com.funhotel.hmvp.model.entity.NewEntity;
 import com.funhotel.hmvp.model.entity.NewEntity.ResultEntity.DataEntity;
+import com.zme.zlibrary.widget.recycler.BaseViewHolder;
+import com.zme.zlibrary.widget.recycler.IMulItemViewType;
 import com.zme.zlibrary.widget.recycler.SuperBaseAdapter;
-import com.zme.zlibrary.widget.recycler.ViewHolder;
 import java.util.List;
 
 /**
@@ -19,18 +20,35 @@ import java.util.List;
  * Modify Time：2018/4/26 23:14
  * Version：1.0
  */
-public class NewAdapter extends SuperBaseAdapter<NewEntity.ResultEntity.DataEntity> {
+public class NewAdapter extends SuperBaseAdapter<NewEntity.ResultEntity.DataEntity> implements
+    IMulItemViewType {
 
   private Context mContext;
   private List<DataEntity> mDatas;
+  private IMulItemViewType<DataEntity> iMulItemViewType;
   public NewAdapter(Context mContext, List<DataEntity> mDatas) {
-    super(mContext, mDatas, R.layout.item_new_list);
+    super(mContext, mDatas, iMulItemViewType);
     this.mContext=mContext;
     this.mDatas=mDatas;
   }
 
   @Override
-  public void binViewHolder(ViewHolder viewHolder, DataEntity dataEntity, int position) {
+  public int getItemViewType(int position, Object o) {
+    return 0;
+  }
+
+  @Override
+  public int getViewTypeCount() {
+    return 0;
+  }
+
+  @Override
+  public int getLayoutId(int viewType) {
+    return 0;
+  }
+
+  @Override
+  public void binViewHolder(BaseViewHolder viewHolder, DataEntity dataEntity, int position) {
 
     viewHolder.setText(R.id.item_tv_name,dataEntity.getTitle());
     viewHolder.setText(R.id.item_tv_newspaper,dataEntity.getAuthor_name());

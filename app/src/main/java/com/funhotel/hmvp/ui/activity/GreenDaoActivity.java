@@ -9,9 +9,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.funhotel.hmvp.R;
 import com.funhotel.hmvp.model.entity.User;
+import com.zme.zlibrary.widget.recycler.BaseViewHolder;
 import com.zme.zlibrary.widget.recycler.OnItemClickListner;
 import com.zme.zlibrary.widget.recycler.SuperBaseAdapter;
-import com.zme.zlibrary.widget.recycler.ViewHolder;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -44,14 +44,11 @@ public class GreenDaoActivity extends AppCompatActivity implements OnItemClickLi
     mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
     //布局从头部还是底部开始布局显示，默认从头部
     mLayoutManager.setReverseLayout(false);
-    GreenDaoListAdapter recyclerViewAdapter = new GreenDaoListAdapter(this,
-        list, this);
     //优化性能，设置ture 固定宽高，避免重新计算
     mRecyclerView.setHasFixedSize(true);
-//    mRecyclerView.setAdapter(recyclerViewAdapter);
     mRecyclerView.setAdapter(new SuperBaseAdapter<User>(this, list, R.layout.item_greendao_list) {
       @Override
-      public void binViewHolder(ViewHolder viewHolder, User user, int position) {
+      public void binViewHolder(BaseViewHolder viewHolder, User user, int position) {
         viewHolder.setText(R.id.tv_name, user.getName());
       }
     });

@@ -26,6 +26,16 @@ import com.zme.zlibrary.base.BasePresenter;
  * Modify Time：2018/4/18 22:30
  * Version：1.0
  */
-public interface NewPresenter extends BasePresenter <NewViewModel>{
+public interface NewPresenter extends BasePresenter<NewViewModel> {
+
+  void onCreate();
+
+  void onResume();
+
+  void onPause();
+
+  void onStop();
+
+  void onDestroy();
 
 }

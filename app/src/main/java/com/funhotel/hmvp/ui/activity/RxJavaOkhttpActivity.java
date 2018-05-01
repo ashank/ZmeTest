@@ -64,7 +64,6 @@ public class RxJavaOkhttpActivity extends AppCompatActivity implements
     //HttpManager httpManager = HttpManager.getInstance(HttpConstant.BASE_URL);
 //    httpManager.getCalendar("2018-03-27", new CalendarResourceSubscriber());
 
-
   }
 
   private class CalendarResourceSubscriber extends ResourceSubscriber<Calendar> {

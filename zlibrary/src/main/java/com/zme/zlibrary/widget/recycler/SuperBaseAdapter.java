@@ -30,22 +30,30 @@ import java.util.List;
  * Modify Time：2018/4/22 22:38
  * Version：1.0
  */
-public abstract class SuperBaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
+public abstract class SuperBaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
 
   private Context mContext;
   private List<T> mDatas;
   private int layoutId;
   private  View itemView;
-  private ViewHolder holder;
+  private BaseViewHolder holder;
 
   private  OnItemClickListner onItemClickListner;
   private OnItemLongClickListner onItemLongClickListner;
   private  OnItemTouchListener onItemTouchListener;
 
+  private IMulItemViewType<T> mulItemViewType;
+
   public SuperBaseAdapter(Context mContext,List<T> mDatas,int layoutId) {
     this.mContext=mContext;
     this.mDatas = mDatas;
     this.layoutId=layoutId;
+  }
+
+  public SuperBaseAdapter(Context mContext, List<T> mDatas,IMulItemViewType<T> mulItemViewType) {
+    this.mContext = mContext;
+    this.mDatas = mDatas;
+    this.mulItemViewType = mulItemViewType;
   }
 
   @Override
@@ -59,28 +67,30 @@ public abstract class SuperBaseAdapter<T> extends RecyclerView.Adapter<ViewHolde
   }
 
 
+
   @Override
   public int getItemViewType(int position) {
+    if (mulItemViewType!=null){
+      mulItemViewType.getItemViewType(position,mDatas.get(position));
+    }
     return super.getItemViewType(position);
   }
 
-
   @Override
-  public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    itemView = LayoutInflater.from(mContext).inflate(layoutId, parent, false);
-    /*if (holder==null){
-      holder = new ViewHolder(mContext, itemView);
-      itemView.setTag(this);
-      return holder;
+  public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    if (mulItemViewType==null){
+      itemView = LayoutInflater.from(mContext).inflate(layoutId, parent, false);
     }else {
-      holder = (ViewHolder)itemView.getTag();
-      return holder;
-    }*/
-    return new ViewHolder(mContext, itemView);
+      if (mulItemViewType.getViewTypeCount()>1){
+        layoutId=mulItemViewType.getLayoutId(viewType);
+      }
+      itemView = LayoutInflater.from(mContext).inflate(layoutId, parent, false);
+    }
+    return new BaseViewHolder(mContext, itemView);
   }
 
   @Override
-  public void onBindViewHolder(ViewHolder holder, int position) {
+  public void onBindViewHolder(BaseViewHolder holder, int position) {
     if (null == mDatas || mDatas.isEmpty()) {
       return;
     }
@@ -96,7 +106,7 @@ public abstract class SuperBaseAdapter<T> extends RecyclerView.Adapter<ViewHolde
       holder.setOnItemLongClickListener(onItemLongClickListner,position);
     }
   }
-  public abstract void binViewHolder(ViewHolder viewHolder,T t,int position);
+  public abstract void binViewHolder(BaseViewHolder viewHolder,T t,int position);
 
 
 

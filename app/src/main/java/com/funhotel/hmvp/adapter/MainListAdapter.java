@@ -2,8 +2,8 @@ package com.funhotel.hmvp.adapter;
 
 import android.content.Context;
 import com.funhotel.hmvp.R;
+import com.zme.zlibrary.widget.recycler.BaseViewHolder;
 import com.zme.zlibrary.widget.recycler.SuperBaseAdapter;
-import com.zme.zlibrary.widget.recycler.ViewHolder;
 import java.util.List;
 
 /**
@@ -25,7 +25,7 @@ public class MainListAdapter extends SuperBaseAdapter<String>  {
   }
 
   @Override
-  public void binViewHolder(ViewHolder viewHolder, String s, int position) {
+  public void binViewHolder(BaseViewHolder viewHolder, String s, int position) {
     viewHolder.setText(R.id.tvTitle,s);
   }
 

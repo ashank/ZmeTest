@@ -47,7 +47,7 @@ import com.zme.zlibrary.widget.recycler.SuperBaseAdapter;
  * Use the {@link NewFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NewFragment extends Fragment implements OnRefreshListener,NewViewModel {
+public class NewFragment extends Fragment implements OnRefreshListener,NewViewModel,OnItemClickListner {
 
   // TODO: Rename parameter arguments, choose names that match
   // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -176,15 +176,22 @@ public class NewFragment extends Fragment implements OnRefreshListener,NewViewMo
     //布局从头部还是底部开始布局显示，默认从头部
     linearLayoutManager.setReverseLayout(false);
     recyclerView.setLayoutManager(linearLayoutManager);
+    //优化性能，设置ture 固定宽高，避免重新计算
+    recyclerView.setHasFixedSize(true);
+    //分隔符
+    /*mRecyclerView.addItemDecoration(new Line(this,Line.VERTICAL_LIST));*/
     recyclerView.setiLoadMoreListener(new ILoadMoreListener() {
       @Override
       public void onLoadMore() {
         LogUtils.e(">>>>>>>load");
-
      }
     });
-    //分隔符
-    /*mRecyclerView.addItemDecoration(new Line(this,Line.VERTICAL_LIST));*/
+
+  }
+
+  @Override
+  public void onItemClick(View view, int postion) {
+    LogUtils.e(">>>onItemClick>>>>"+postion);
   }
 
   @Override
@@ -197,16 +204,8 @@ public class NewFragment extends Fragment implements OnRefreshListener,NewViewMo
     if (aNew==null){
       return;
     }
-
     adapter=new NewAdapter(getActivity(),aNew.getData());
-    adapter.setOnItemClickListener(new OnItemClickListner() {
-      @Override
-      public void onItemClick(View view, int postion) {
-        LogUtils.e(">>>onItemClick>>>>"+postion);
-      }
-    });
-    //优化性能，设置ture 固定宽高，避免重新计算
-    recyclerView.setHasFixedSize(true);
+    adapter.setOnItemClickListener(this);
     recyclerView.setAdapter(adapter);
   }
 

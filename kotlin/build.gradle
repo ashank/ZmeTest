@@ -40,5 +40,5 @@ dependencies {
     implementation rootProject.ext.dependencies.ankosupport
     implementation rootProject.ext.dependencies.ankoappcompat
 
-    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'junit:junit:4.12'
 }

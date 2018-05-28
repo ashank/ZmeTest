@@ -3,8 +3,8 @@ package com.zme.zlibrary.widget.banner;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import com.renny.recyclerbanner.banner.adapter.MzBannerAdapter;
-import com.renny.recyclerbanner.banner.layoutmanager.BannerLayoutManager;
+import com.zme.zlibrary.widget.banner.adapter.MzBannerAdapter;
+import com.zme.zlibrary.widget.banner.layoutmanager.BannerLayoutManager;
 import java.util.List;
 
 public class RecyclerViewBannerNew extends RecyclerViewBannerBase<BannerLayoutManager, MzBannerAdapter> {

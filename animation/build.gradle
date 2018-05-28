@@ -61,5 +61,5 @@ dependencies {
     //anfix
     implementation rootProject.ext.dependencies.andfix
     implementation project(':zlibrary')
-    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'junit:junit:4.12'
 }

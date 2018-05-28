@@ -5,7 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
-import com.renny.recyclerbanner.banner.adapter.RecyclerAdapterNormal;
+import com.zme.zlibrary.widget.banner.adapter.RecyclerAdapterNormal;
 import java.util.List;
 
 public class NormalRecyclerViewBanner extends RecyclerViewBannerBase<LinearLayoutManager, RecyclerAdapterNormal> {

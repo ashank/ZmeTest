@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
-import com.renny.recyclerbanner.R;
-import com.renny.recyclerbanner.banner.RecyclerViewBannerBase;
+import com.zme.zlibrary.R;
+import com.zme.zlibrary.widget.banner.RecyclerViewBannerBase;
 import java.util.List;
 
 /**

@@ -27,6 +27,11 @@ import com.zme.zlibrary.base.BaseView;
  * Version：1.0
  */
 public interface NewViewModel extends BaseView {
+
+
   void bindData( NewEntity.ResultEntity aNew);
+
+  void onStartHttp();
+
 
 }

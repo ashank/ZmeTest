@@ -24,7 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.zme.zlibrary.widget.recycler.BaseViewHolder;
-import com.zme.zlibrary.widget.recycler.OnItemClickListner;
+import com.zme.zlibrary.widget.recycler.listener.OnItemClickListener;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,12 +38,12 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder
 
   private Context mContext;
   private View itemView;
-  private OnItemClickListner mOnItemClickListner;
+  private OnItemClickListener mOnItemClickListner;
   private MyViewHolder mMyViewHolder;
   private List<BluetoothDevice> list = new LinkedList<>();
 
   public MainRecyclerViewAdapter(Context context, List<BluetoothDevice> list,
-      OnItemClickListner onItemClickListner) {
+      OnItemClickListener onItemClickListner) {
     this.mContext = context;
     this.mOnItemClickListner = onItemClickListner;
     this.list = list;
@@ -94,7 +94,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder
     private TextView tvAdress;
     private TextView tvStatus;
 
-    public MyViewHolder(View itemView, OnItemClickListner onItemClickListner) {
+    public MyViewHolder(View itemView, OnItemClickListener onItemClickListner) {
       super(itemView, onItemClickListner);
       mTextView = (TextView) itemView.findViewById(R.id.item_tv_name);
       tvAdress = (TextView) itemView.findViewById(R.id.item_tv_adress);

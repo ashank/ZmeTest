@@ -1,4 +1,4 @@
-package com.zme.zlibrary.widget.recycler;
+package com.zme.zlibrary.widget.recycler.decoration;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;

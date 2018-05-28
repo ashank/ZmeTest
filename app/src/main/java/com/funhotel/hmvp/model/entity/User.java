@@ -9,37 +9,34 @@ import org.greenrobot.greendao.annotation.Generated;
  */
 
 @Entity
-public  class User {
+public class User {
 
     @Id(autoincrement = true)
     private Long number;
 
-    private String id;//编号
-    private String name;
+    private String id;
+    private String nickName;
+    private String realName;
     private int age;
-    private  int sex;
-    private  int height;
-    private  int weight;
+    private int sex;
+    private String telePhone;
+    private String eamail;
+    private String password;
+    private String birthday;
 
-    public User( String id, String name, int age, int sex, int height, int weight) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.sex = sex;
-        this.height = height;
-        this.weight = weight;
-    }
-
-    @Generated(hash = 1848410673)
-    public User(Long number, String id, String name, int age, int sex, int height,
-            int weight) {
+    @Generated(hash = 735061427)
+    public User(Long number, String id, String nickName, String realName, int age, int sex, String telePhone,
+            String eamail, String password, String birthday) {
         this.number = number;
         this.id = id;
-        this.name = name;
+        this.nickName = nickName;
+        this.realName = realName;
         this.age = age;
         this.sex = sex;
-        this.height = height;
-        this.weight = weight;
+        this.telePhone = telePhone;
+        this.eamail = eamail;
+        this.password = password;
+        this.birthday = birthday;
     }
 
     @Generated(hash = 586692638)
@@ -62,12 +59,52 @@ public  class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public String getTelePhone() {
+        return telePhone;
+    }
+
+    public void setTelePhone(String telePhone) {
+        this.telePhone = telePhone;
+    }
+
+    public String getEamail() {
+        return eamail;
+    }
+
+    public void setEamail(String eamail) {
+        this.eamail = eamail;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public int getAge() {
@@ -86,19 +123,5 @@ public  class User {
         this.sex = sex;
     }
 
-    public int getHeight() {
-        return height;
-    }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public int getWeight() {
-        return weight;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
 }

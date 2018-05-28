@@ -43,7 +43,14 @@ public class NewPresenterImp implements NewPresenter {
 
   @Override
   public void attachView(final NewViewModel view) {
+    this.newViewModel=view;
+    onStartHttp();
+  }
 
+  public void onStartHttp(){
+    if (newViewModel!=null){
+      newViewModel.onStartHttp();
+    }
     HttpManager httpManager = HttpManager.getInstance(HttpConstant.BASE_URL);
     httpManager.getNewA(type, new Callback<NewEntity>() {
       @Override
@@ -52,8 +59,8 @@ public class NewPresenterImp implements NewPresenter {
         NewEntity entity = response.body();
         if (null == entity) {
           LogUtils.e("entity为空");
-          if (null != view) {
-            view.bindData(null);
+          if (null != newViewModel) {
+            newViewModel.bindData(null);
           }
           return;
         }
@@ -61,24 +68,25 @@ public class NewPresenterImp implements NewPresenter {
         NewEntity.ResultEntity anew = entity.getResult();
         if (null == anew) {
           LogUtils.e("New为空");
-          if (null != view) {
-            view.bindData(null);
+          if (null != newViewModel) {
+            newViewModel.bindData(null);
           }
           return;
         }
-        if (null != view) {
-          view.bindData(anew);
+        if (null != newViewModel) {
+          newViewModel.bindData(anew);
         }
       }
       @Override
       public void onFailure(Call<NewEntity> call, Throwable t) {
-        if (null!=view){
-          view.bindData(null);
+        if (null!=newViewModel){
+          newViewModel.bindData(null);
         }
 
       }
     });
   }
+
 
   @Override
   public void detachView() {
@@ -91,5 +99,30 @@ public class NewPresenterImp implements NewPresenter {
 
   public void setNewViewModel(NewViewModel newViewModel) {
     this.newViewModel = newViewModel;
+  }
+
+  @Override
+  public void onCreate() {
+
+  }
+
+  @Override
+  public void onResume() {
+
+  }
+
+  @Override
+  public void onPause() {
+
+  }
+
+  @Override
+  public void onStop() {
+
+  }
+
+  @Override
+  public void onDestroy() {
+
   }
 }

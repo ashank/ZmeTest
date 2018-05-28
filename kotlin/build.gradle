@@ -25,20 +25,20 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
     //kotlin需要的jar包
-    compile rootProject.ext.dependencies.kotlin
+    implementation rootProject.ext.dependencies.kotlin
     // In case you need support-v4 bindings
-    compile rootProject.ext.dependencies.supportV7
+    implementation rootProject.ext.dependencies.supportV7
     //compile 'com.android.support:appcompat-v7:26.+'
-    compile rootProject.ext.dependencies.constraintlayout
-    compile rootProject.ext.dependencies.ankosdk
-    compile rootProject.ext.dependencies.ankosupport
-    compile rootProject.ext.dependencies.ankoappcompat
+    implementation rootProject.ext.dependencies.constraintlayout
+    implementation rootProject.ext.dependencies.ankosdk
+    implementation rootProject.ext.dependencies.ankosupport
+    implementation rootProject.ext.dependencies.ankoappcompat
 
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
 }

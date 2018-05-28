@@ -20,16 +20,13 @@
   android:id="@+id/card_view"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:layout_marginTop="2dp"
-  android:layout_marginBottom="2dp"
-  android:layout_marginStart="8dp"
-  android:layout_marginEnd="8dp"
-  android:layout_marginLeft="8dp"
+  android:layout_margin="5dp"
   android:alwaysDrawnWithCache="true"
   android:foreground="?android:attr/selectableItemBackground"
-  card_view:cardCornerRadius="4dp"
+  card_view:cardCornerRadius="3dp"
   card_view:cardElevation="1dp"
   card_view:cardUseCompatPadding="true"
+  android:descendantFocusability="blocksDescendants"
   >
 
   <LinearLayout
@@ -58,7 +55,7 @@
     <ImageView
       android:id="@+id/iv_thumb01"
       android:layout_weight="1"
-      android:background="@color/color_013c6e"
+      android:background="@color/color_D8D8D8"
       android:layout_width="match_parent"
       android:layout_height="match_parent"/>
 
@@ -67,7 +64,7 @@
       android:layout_weight="1"
       android:layout_marginLeft="5dp"
       android:layout_marginRight="5dp"
-      android:background="@color/color_013c6e"
+      android:background="@color/color_D8D8D8"
       android:layout_width="match_parent"
       android:layout_height="match_parent"/>
 

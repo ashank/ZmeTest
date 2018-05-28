@@ -24,6 +24,7 @@ def releaseTime() {
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     buildToolsVersion rootProject.ext.android.buildToolsVersion
+    flavorDimensions "versionCode"
 
     //用于调用so文件使用，指定so文件的目录，默认是jniLibs，如果需要改变，在[]中写入so文件的路径
     sourceSets {
@@ -52,6 +53,8 @@ android {
         //dex突破65535的限制
         multiDexEnabled true
 
+
+        vectorDrawables.useSupportLibrary = true
 
     }
 
@@ -136,12 +139,14 @@ android {
 
     //分割apk代码
     /*splits {
+        //排除分辨率
         density {
             enable true
             exclude 'ldpi', 'mdpi'
             compatibleScreens 'normal', 'large', 'xlarge'
         }
 
+        //排除cpu架构
          abi {
             enable true
             reset()
@@ -163,7 +168,7 @@ android {
             applicationId "com.funhotel.hmvp"
             // 动态添加 string.xml 字段；
             // 注意，这里是添加，在 string.xml 不能有这个字段，会重名！！！
-            resValue "string", "app_name", "ZME"
+            resValue "string", "app_name", "天天新闻"
             resValue "bool", "auto_updates", 'false'
             // 动态修改 常量字段
             buildConfigField "String", "ENVIRONMENT", '"我是ZME版本"'
@@ -175,9 +180,12 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
-    compile project(':zlibrary')
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support:support-vector-drawable:27.1.1'
+    implementation 'com.android.support:support-v4:27.1.1'
+    testImplementation 'junit:junit:4.12'
+    api project(':zlibrary')
 
     //ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:1.1.1"
@@ -190,7 +198,7 @@ dependencies {
 
 }
 
-//多个library时
+//多个library时,指定版本
 configurations.all {
 
     resolutionStrategy.eachDependency { DependencyResolveDetails details ->

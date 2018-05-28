@@ -5,11 +5,14 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+  android:background="@mipmap/bg1"
+  android:fitsSystemWindows="true"
   tools:context="com.funhotel.hmvp.ui.activity.MainActivity"
   tools:layout_editor_absoluteY="25dp">
 
   <android.support.v7.widget.Toolbar
     android:id="@+id/toolbar"
+    android:visibility="invisible"
     android:layout_width="0dp"
     android:layout_height="?attr/actionBarSize"
     android:background="@color/colorPrimary"
@@ -26,6 +29,7 @@
   <android.support.v4.widget.SwipeRefreshLayout
     android:id="@+id/refresh_layout"
     android:layout_width="0dp"
+    android:visibility="invisible"
     android:layout_height="0dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
@@ -35,7 +39,6 @@
     <android.support.v7.widget.RecyclerView
       android:id="@+id/rlview"
       android:layout_width="match_parent"
-      android:background="@mipmap/bg"
       android:layout_height="match_parent"
       android:orientation="vertical">
 

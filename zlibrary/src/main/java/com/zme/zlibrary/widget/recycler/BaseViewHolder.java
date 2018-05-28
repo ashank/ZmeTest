@@ -10,18 +10,24 @@ import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.support.v7.widget.RecyclerView;
 import android.text.util.Linkify;
+import android.util.Log;
 import android.util.SparseArray;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.Checkable;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import com.zme.zlibrary.widget.recycler.listener.OnItemClickListener;
+import com.zme.zlibrary.widget.recycler.listener.OnItemLongClickListener;
+import com.zme.zlibrary.widget.recycler.listener.OnItemTouchListener;
 
 /**
  * Description ：公共BaseViewHolder
@@ -30,22 +36,43 @@ import android.widget.TextView;
  * Modify Time：2018/4/25 22:21
  * Version：1.0
  */
-public class BaseViewHolder extends RecyclerView.ViewHolder {
+public class BaseViewHolder extends RecyclerView.ViewHolder implements OnClickListener,OnTouchListener,OnLongClickListener{
 
     private SparseArray<View> views;
     private Context mContext;
     private View itemView;
+    private int type;
 
-    private OnItemLongClickListner onItemLongClickListner;
-    private OnItemClickListner onItemClickListner;
+    private OnItemLongClickListener onItemLongClickListner;
+    private OnItemClickListener onItemClickListner;
+    private OnItemTouchListener onItemTouchListener;
 
-    public BaseViewHolder(Context context, View itemView) {
+    public BaseViewHolder(Context context, View itemView,
+        OnItemClickListener onItemClickListner,
+        OnItemLongClickListener onItemLongClickListner,
+        OnItemTouchListener onItemTouchListener) {
         super(itemView);
         this.mContext = context;
         views = new SparseArray<>();
         this.itemView=itemView;
+        this.onItemTouchListener=onItemTouchListener;
+        this.onItemLongClickListner=onItemLongClickListner;
+        this.onItemClickListner=onItemClickListner;
+        itemView.setOnClickListener(this);
+        itemView.setOnLongClickListener(this);
+        /*itemView.setOnTouchListener(this);*/
     }
 
+    public static BaseViewHolder  get(Context context, int  layoutId,ViewGroup parent,
+        OnItemClickListener onItemClickListner,
+        OnItemLongClickListener onItemLongClickListner,
+        OnItemTouchListener onItemTouchListener) {
+        View itemView = LayoutInflater.from(context).inflate(layoutId, parent, false);
+        return new BaseViewHolder(context,itemView,
+            onItemClickListner,
+            onItemLongClickListner,
+            onItemTouchListener);
+    }
 
     public <T extends View> T getView(int viewId) {
         View view = views.get(viewId);
@@ -59,6 +86,14 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
 
     public View getItemView() {
         return itemView;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     /**
@@ -225,61 +260,31 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
-    /**
-     * ItemView 的长按事件
-     *
-     * @param listener {@link OnItemLongClickListner}
-     * @return BaseViewHolder
-     */
-    public BaseViewHolder setOnItemLongClickListener(final OnItemLongClickListner listener, final int position) {
-        itemView.setOnLongClickListener(new OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (listener!=null){
-                    listener.onItemLongClick(getItemView(),position);
-                }
-                return true;
-            }
-        });
-        return this;
+    @Override
+    public void onClick(View v) {
+        Log.e("TAG", "onClick:sdsdddsdd"+getAdapterPosition() );
+        if (onItemClickListner!=null){
+            onItemClickListner.onItemClick(getItemView(),getAdapterPosition());
+        }
     }
 
-    /**
-     * ItemView 的触摸事件
-     *
-     * @param listener {@link android.view.View.OnTouchListener}
-     * @return BaseViewHolder
-     */
-    public BaseViewHolder setOnItemTouchListener(final OnItemTouchListener listener, final int position) {
-        itemView.setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (listener!=null){
-                    listener.onItemTouch(getItemView(),event,position);
-                }
-                return false;
-            }
-        });
-        return this;
+    @Override
+    public boolean onLongClick(View v) {
+        Log.e("TAG", "onLongClick: " );
+        if (onItemLongClickListner!=null){
+            onItemLongClickListner.onItemLongClick(getItemView(),getAdapterPosition());
+        }
+        return true;
     }
 
-    /**
-     * ItemView 的点击事件
-     * @param listener {@link android.view.View.OnClickListener}
-     * @return BaseViewHolder
-     */
-    public BaseViewHolder setOnItemClickListener(final OnItemClickListner listener, final int position) {
-        itemView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener!=null){
-                    listener.onItemClick(getItemView(),position);
-                }
-            }
-        });
-        return this;
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        Log.e("TAG", "onTouch: " );
+        if (onItemTouchListener!=null){
+            onItemTouchListener.onItemTouch(getItemView(),event,getAdapterPosition());
+        }
+        return true;
     }
-
 
     public void recycleView(){
         if (views!=null){
@@ -288,8 +293,5 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    /**
-     * 处理数据
-     */
 
 }

@@ -1,9 +1,8 @@
 package com.funhotel.kotlin
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import org.jetbrains.anko.*
-import org.jetbrains.anko.custom.async
 
 class Main2Activity : AppCompatActivity() {
 
@@ -34,7 +33,7 @@ class Main2Activity : AppCompatActivity() {
         }
 
 
-        async {
+        doAsync {
             uiThread {
                 toast("sdsdsd")
 

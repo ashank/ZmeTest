@@ -1,9 +1,33 @@
 <resources>
-  <!--<string name="app_name">Hmvp</string>-->
+  <!--<string name="app_name">天天新闻</string>-->
   <string name="title_activity_welcome">WelcomeActivity</string>
   <string name="dummy_button">Dummy Button</string>
   <string name="dummy_content">DUMMY</string>
   <string name="permission">权限(permission)</string>
+
+  <string name="public_ok">确定</string>
+  <string name="edit_account">请输入手机号码</string>
+  <string name="edit_password">请输入密码</string>
+  <string name="edit_password11">请输入密码(6~15位)</string>
+  <string name="登录">登录</string>
+  <string name="login">登录</string>
+  <string name="go_login">去登录</string>
+  <string name="out_login">退出账号</string>
+  <string name="regist">注册</string>
+  <string name="forget_password">忘记密码</string>
+  <string name="next_text">下一步</string>
+  <string name="next_text_ps">点击下一步，即表示您同意&#160;</string>
+  <string name="regist_ps1">点击注册，即表示您同意&#160;</string>
+  <string name="regist_protocol">用户协议&#160;</string>
+  <string name="edit_code">请输入验证码</string>
+  <string name="sendcode_text">获取验证码</string>
+  <string name="loading_data">正在加载数据...</string>
+  <string name="net_texterror">糟糕,似乎网络断开了</string>
+  <string name="net_texterror_check">尝试检查网络</string>
+  <string name="not_service">无法连接到服务器!</string>
+  <string name="privacy_policy">隐私条款</string>
+  <string name="bindingcellphone">绑定手机号</string>
+  <string name="bindingcellphone_default">未绑定</string>
 
   <string name="add">添加</string>
   <string name="share">分享</string>
@@ -11,4 +35,9 @@
 
   <!-- TODO: Remove or change this placeholder text -->
   <string name="hello_blank_fragment">Hello blank fragment</string>
+  <string name="title_activity_home">HomeActivity</string>
+  <string name="title_home">新闻</string>
+  <string name="title_dashboard">推荐</string>
+  <string name="title_notifications">我的</string>
+  <string name="title_activity_login">LoginActivity</string>
 </resources>

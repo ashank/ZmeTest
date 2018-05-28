@@ -18,6 +18,7 @@ package com.funhotel.hmvp.model.http;
 
 import com.funhotel.hmvp.model.entity.New;
 import com.funhotel.hmvp.model.entity.NewEntity;
+import com.funhotel.hmvp.model.entity.NewEntity1;
 import io.reactivex.Flowable;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -45,6 +46,8 @@ public interface IHttpService<T> {
   Call<NewEntity> getNew1(@Header("Authorization") String authorization,@Query("type") String type);
 
 
+  @GET("/news/get")
+  Call<NewEntity1> getNewList(@Header("Authorization") String authorization,@Query("type") String type);
 
 
 

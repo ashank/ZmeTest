@@ -31,13 +31,13 @@ import com.funhotel.hmvp.adapter.MainListAdapter;
 import com.funhotel.hmvp.test.jni.JniDemo;
 import com.funhotel.hmvp.ui.activity.presentation.PresentationActivity;
 import com.zme.zlibrary.base.BaseActivity;
-import com.zme.zlibrary.widget.recycler.OnItemClickListner;
+import com.zme.zlibrary.widget.recycler.listener.OnItemClickListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends BaseActivity implements OnItemClickListner,
+public class MainActivity extends BaseActivity implements OnItemClickListener,
     SwipeRefreshLayout.OnRefreshListener {
 
   private final static String TAG = "MainActivity";
@@ -62,6 +62,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListner,
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+
     initView();
     setupRefreshLayout();
     list = getList();
@@ -115,6 +116,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListner,
     list.add("DesignPattern");
     list.add("RxJava");
     list.add("CustomView");
+    list.add("Banner");
     for (int i = 0; i < 100; i++) {
       list.add("test" + i);
     }
@@ -188,6 +190,9 @@ public class MainActivity extends BaseActivity implements OnItemClickListner,
         break;
       case 7:
         intent.setClass(MainActivity.this, CustomViewActivity.class);
+        break;
+      case 8:
+        intent.setClass(MainActivity.this, BannerDemoActivity.class);
         break;
       default:
         intent.setClass(MainActivity.this, MainActivity.class);

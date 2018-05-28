@@ -1,4 +1,4 @@
-package com.zme.zlibrary.widget.recycler;
+package com.zme.zlibrary.widget.recycler.listener;
 
 import android.view.MotionEvent;
 import android.view.View;

@@ -10,18 +10,45 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:navigationIcon="@mipmap/ic_launcher"
-        app:subtitle="子标题"
-        app:subtitleTextColor="#fff"
         android:elevation="4dp"
-        app:title="标题"
-        app:titleTextColor="#fff"/>
+       >
+
+        <RelativeLayout
+          android:layout_width="match_parent"
+          android:gravity="center_vertical"
+          android:layout_marginRight="15dp"
+          android:layout_height="match_parent">
+
+            <ImageView
+              android:id="@+id/iv_left"
+              android:layout_alignParentLeft="true"
+              android:layout_centerVertical="true"
+              android:background="@drawable/ic_tuijian1"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"/>
+
+            <TextView
+              android:id="@+id/tv_title"
+              android:text="爱莎江南"
+              android:singleLine="true"
+              android:maxEms="50"
+              android:gravity="center"
+              android:layout_centerInParent="true"
+              android:textSize="18sp"
+              android:textColor="@color/color_ffffff"
+              android:ellipsize="end"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresh_layout"

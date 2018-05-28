@@ -42,13 +42,13 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.zme.zlibrary.utils.LogUtils;
-import com.zme.zlibrary.widget.recycler.OnItemClickListner;
+import com.zme.zlibrary.widget.recycler.listener.OnItemClickListener;
 import java.util.LinkedList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener,
-    OnRefreshListener, OnItemClickListner {
+    OnRefreshListener, OnItemClickListener {
 
   @BindView(R.id.tv_name)
   private TextView tvName;

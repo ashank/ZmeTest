@@ -1,4 +1,4 @@
-package com.zme.zlibrary.widget.recycler;
+package com.zme.zlibrary.widget.recycler.decoration;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,16 +10,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 /**
- * @Title: Line
- * @Description: recyclewView 的间隔线，可以指定是垂直的还是水平的间隔线
- * @author: Zhiyahan
- * @data: 2016/4/25 18:08
+ * @Title : Line
+ * @Description : recyclewView 的间隔线，可以指定是垂直的还是水平的间隔线
+ * @author : Zhiyahan
+ * @data : 2016/4/25 18:08
  */
 public class Line extends RecyclerView.ItemDecoration {
 
-    private static final int[] ATTRS = new int[]{
-            android.R.attr.listDivider
-    };
+    private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
     public static final int HORIZONTAL_LIST = LinearLayoutManager.HORIZONTAL;
     public static final int VERTICAL_LIST = LinearLayoutManager.VERTICAL;
     private Drawable mDivider;

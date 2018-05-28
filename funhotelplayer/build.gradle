@@ -22,9 +22,9 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile project(':ijkplayer-java')
-    compile project(':zlibrary')
-    compile 'com.github.florent37:viewanimator:1.0.0@aar'
-    compile rootProject.ext.dependencies.supportV7
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':ijkplayer-java')
+    implementation project(':zlibrary')
+    implementation 'com.github.florent37:viewanimator:1.0.0@aar'
+    implementation rootProject.ext.dependencies.supportV7
 }

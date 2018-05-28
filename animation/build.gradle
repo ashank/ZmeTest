@@ -37,22 +37,29 @@ android {
     freeline{
         hack true
     }
+
+
+    // 为了解决部分第三方库重复打包了META-INF的问题
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+
 }
 
+
+
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
     //freeline
-    debugCompile rootProject.ext.dependencies.freelinedebugCompile
-    releaseCompile rootProject.ext.dependencies.freeline
-    testCompile rootProject.ext.dependencies.freeline
+    debugImplementation rootProject.ext.dependencies.freelinedebugCompile
+    releaseImplementation rootProject.ext.dependencies.freeline
+    testImplementation rootProject.ext.dependencies.freeline
     //anfix
-    compile rootProject.ext.dependencies.andfix
-
-    compile project(':zlibrary')
-
-    testCompile 'junit:junit:4.12'
+    implementation rootProject.ext.dependencies.andfix
+    implementation project(':zlibrary')
+    testImplementation 'junit:junit:4.12'
 }

@@ -1,6 +1,8 @@
 package com.ashank.animation;
 
 import android.net.Uri;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -34,7 +36,10 @@ public class AnimationActivity extends AppCompatActivity
         //使用切换动画
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         //透明状态栏
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        if (VERSION.SDK_INT>= VERSION_CODES.LOLLIPOP){
+            getWindow().setStatusBarColor(getResources().getColor(android.R.color.transparent));
+        }
         //透明导航栏
         /*getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);*/
         setContentView(R.layout.activity_animation);
@@ -59,9 +64,7 @@ public class AnimationActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
         frameLayout = (FrameLayout) findViewById(R.id.fr_layout);
-
         toast();
     }
 
@@ -106,7 +109,6 @@ public class AnimationActivity extends AppCompatActivity
         if (id == R.id.tween) {
             // Handle the camera action
             //补间动画
-
 
         } else if (id == R.id.property) {
             //属性动画

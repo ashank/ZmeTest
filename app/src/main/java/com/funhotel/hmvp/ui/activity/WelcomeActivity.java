@@ -1,12 +1,16 @@
 package com.funhotel.hmvp.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import com.funhotel.hmvp.R;
 
 /**
@@ -15,7 +19,7 @@ import com.funhotel.hmvp.R;
  */
 public class WelcomeActivity extends AppCompatActivity {
 
-    private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
+    private static final int AUTO_HIDE_DELAY_MILLIS = 100;
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
     private final Runnable mHidePart2Runnable = new Runnable() {
@@ -26,8 +30,8 @@ public class WelcomeActivity extends AppCompatActivity {
                     | View.SYSTEM_UI_FLAG_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                     | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+                    );
+
         }
     };
     private final Runnable mHideRunnable = new Runnable() {
@@ -41,12 +45,12 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-       delayedHide(AUTO_HIDE_DELAY_MILLIS);
+        delayedHide(AUTO_HIDE_DELAY_MILLIS);
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -96,5 +100,52 @@ public class WelcomeActivity extends AppCompatActivity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    private void initWindows() {
+        Window window = getWindow();
+        int color = getResources().getColor(android.R.color.transparent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.clearFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+           /* //设置状态栏颜色
+            window.setStatusBarColor(color);*/
+            //设置导航栏颜色
+//            window.setNavigationBarColor(color);
+
+            /*ViewGroup contentView = ((ViewGroup) findViewById(android.R.id.content));
+            View childAt = contentView.getChildAt(0);
+            if (childAt != null) {
+                childAt.setFitsSystemWindows(true);
+            }*/
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            /*//透明状态栏
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            //透明导航栏
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            //设置contentview为fitsSystemWindows
+            ViewGroup contentView = (ViewGroup) findViewById(android.R.id.content);
+            View childAt = contentView.getChildAt(0);
+            if (childAt != null) {
+                childAt.setFitsSystemWindows(true);
+            }
+            //给statusbar着色
+            View view = new View(this);
+            view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight(this)));
+            view.setBackgroundColor(color);
+            contentView.addView(view);*/
+        }
+    }
+
+    public int getStatusBarHeight(Context context) {
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen",
+            "android");
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 }

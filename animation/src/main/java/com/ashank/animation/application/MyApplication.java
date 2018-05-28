@@ -2,11 +2,9 @@ package com.ashank.animation.application;
 
 import android.os.Environment;
 import android.util.Log;
-
 import com.alipay.euler.andfix.patch.PatchManager;
 import com.antfortune.freeline.FreelineCore;
-import com.funhotel.mvp.common.BaseApplication;
-
+import com.zme.zlibrary.base.BaseApplication;
 import java.io.IOException;
 
 /**

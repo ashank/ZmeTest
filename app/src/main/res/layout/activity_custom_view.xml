@@ -25,7 +25,7 @@
   tools:context=".ui.activity.CustomViewActivity">
 
 
-  <com.zme.zlibrary.widget.DragLayout
+ <!-- <com.zme.zlibrary.widget.DragLayout
     android:id="@+id/img"
     android:layout_width="match_parent"
     android:visibility="gone"
@@ -36,31 +36,54 @@
 
   <Button
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="match_parent"
     android:clickable="true"
     android:text="This is first child view"/>
 
   <Button
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="match_parent"
     android:clickable="true"
     android:text="This is second child view"/>
 
   <Button
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="match_parent"
     android:clickable="true"
     android:text="This is third child view"/>
 
 
+</com.zme.zlibrary.widget.DragLayout>-->
 
-</com.zme.zlibrary.widget.DragLayout>
+
+  <com.zme.zlibrary.widget.refresh.RefreshLayout
+    android:id="@+id/refresh_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.zme.zlibrary.widget.refresh.HeaderView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+    </com.zme.zlibrary.widget.refresh.HeaderView>
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="500dp"
+      android:background="@color/color_5d4037"
+      android:text="sadasdsad"/>
+
+    <com.zme.zlibrary.widget.refresh.FooterView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+    </com.zme.zlibrary.widget.refresh.FooterView>
+
+  </com.zme.zlibrary.widget.refresh.RefreshLayout>
 
 
-  <com.zme.zlibrary.widget.DrapView
+  <!--<com.zme.zlibrary.widget.DrapView
     android:layout_width="900dp"
-    android:orientation="vertical"
-    android:layout_height="900dp">
+    android:layout_height="900dp"
+    android:orientation="vertical">
 
     <TextView
       android:layout_width="100dp"
@@ -77,5 +100,5 @@
       android:layout_height="100dp"
       android:text="sdkk "/>
 
-  </com.zme.zlibrary.widget.DrapView>
+  </com.zme.zlibrary.widget.DrapView>-->
 </FrameLayout>

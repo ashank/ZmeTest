@@ -2,7 +2,6 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -16,7 +15,7 @@
         app:orientation="horizontal"
         />
 
-    <com.renny.recyclerbanner.banner.RecyclerViewBannerNew
+    <com.zme.zlibrary.widget.banner.RecyclerViewBannerNew
         android:id="@+id/banner2"
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -25,12 +24,4 @@
         app:showIndicator="false"
         />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:onClick="jump"
-        android:text="查看基础版"
-        />
 </LinearLayout>

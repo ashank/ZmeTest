@@ -129,7 +129,7 @@ public class DragLayout extends ViewGroup {
         break;
       case MotionEvent.ACTION_MOVE:
         //TODO 在移动过程中不断获取x坐标
-        mXDown = event.getRawX();
+        mXMove = event.getRawX();
         //TODO 计算移动的x坐标和按下时的坐标差，如果大于touchSlop的距离，则允许滑动
         float diff = Math.abs(mXMove - mXDown);
         if (diff > mTouchSlop) {

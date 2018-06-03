@@ -18,8 +18,11 @@ package com.funhotel.hmvp.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import com.funhotel.hmvp.R;
 import com.zme.zlibrary.widget.DragLayout;
+import com.zme.zlibrary.widget.refresh.RefreshLayout;
+import com.zme.zlibrary.widget.refresh.listener.OnRefreshListener;
 
 public class CustomViewActivity extends AppCompatActivity {
 
@@ -30,7 +33,26 @@ public class CustomViewActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_custom_view);
 
-    dradImageView=(DragLayout)findViewById(R.id.img);
+    final RefreshLayout refreshLayout=(RefreshLayout)findViewById(R.id.refresh_layout);
+    refreshLayout.onAutoRefresh();
+    refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+      @Override
+      public void onRefresh() {
+        //刷新完成
+        Log.e("TAG", "onRefresh: 开始刷新" );
+       /* refreshLayout.postDelayed(new Runnable() {
+          @Override
+          public void run() {
+            refreshLayout.onRefreshFinish();
+          }
+        },3000);*/
+      }
+    });
+
+
+
+
+
 
 
 

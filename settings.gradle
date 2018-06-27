@@ -1,1 +1,2 @@
-include ':app', ':ijkplayer-java', ':funhotelplayer', ':animation', ':greendao', ':kotlin', ':zlibrary', ':bluetooth'
+include ':app', ':ijkplayer-java', ':funhotelplayer', ':animation', ':greendao', ':kotlin', ':zlibrary',
+        ':bluetooth'

@@ -1,4 +1,4 @@
-package com.zme.zlibrary.widget.recycler.listener;
+package com.zme.zlibrary.widget.recycler;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

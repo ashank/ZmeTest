@@ -38,7 +38,7 @@ import com.funhotel.hmvp.presenter.NewPresenterImp;
 import com.funhotel.hmvp.ui.activity.AdvanceWebActivity;
 import com.zme.zlibrary.widget.recycler.SuperBaseAdapter;
 import com.zme.zlibrary.widget.recycler.listener.OnItemClickListener;
-import com.zme.zlibrary.widget.recycler.listener.WrapAdpter;
+import com.zme.zlibrary.widget.recycler.WrapAdpter;
 
 /**
  * A simple {@link Fragment} subclass.

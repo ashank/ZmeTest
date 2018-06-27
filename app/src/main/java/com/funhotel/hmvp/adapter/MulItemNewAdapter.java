@@ -86,11 +86,6 @@ public class MulItemNewAdapter extends MulItemBaseAdapter<DataEntity> implements
     }
 
     @Override
-    public int getViewTypeCount() {
-        return 3;
-    }
-
-    @Override
     public int getLayoutId(int viewType) {
         if (viewType == TWO) {
             return R.layout.item_new_list_two_img;
@@ -103,5 +98,4 @@ public class MulItemNewAdapter extends MulItemBaseAdapter<DataEntity> implements
         }
         return R.layout.item_new_list_one_img;
     }
-
 }

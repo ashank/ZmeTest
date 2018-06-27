@@ -11,8 +11,6 @@ public interface IMulItemViewType<T> {
 
   int getItemViewType(int position,T t);
 
-  int getViewTypeCount();
-
   int getLayoutId(int viewType);
 
 }

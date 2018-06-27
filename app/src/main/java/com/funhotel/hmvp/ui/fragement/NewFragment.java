@@ -26,7 +26,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,8 +36,9 @@ import com.funhotel.hmvp.model.entity.NewEntity.ResultEntity;
 import com.funhotel.hmvp.model.viewmodel.NewViewModel;
 import com.funhotel.hmvp.presenter.NewPresenterImp;
 import com.funhotel.hmvp.ui.activity.AdvanceWebActivity;
-import com.zme.zlibrary.widget.recycler.listener.OnItemClickListener;
 import com.zme.zlibrary.widget.recycler.SuperBaseAdapter;
+import com.zme.zlibrary.widget.recycler.listener.OnItemClickListener;
+import com.zme.zlibrary.widget.recycler.listener.WrapAdpter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -222,7 +222,8 @@ public class NewFragment extends Fragment implements OnRefreshListener, NewViewM
         if (adapter == null) {
             adapter = new MulItemNewAdapter(getActivity(), aNew.getData());
             adapter.setOnItemClickListener(this);
-            recyclerView.setAdapter(adapter);
+            WrapAdpter wrapAdpter=new WrapAdpter(getContext(),adapter);
+            recyclerView.setAdapter(wrapAdpter);
         } else {
             adapter.resetData(aNew.getData());
             adapter.notifyItemRangeChanged(0, aNew.getData().size());

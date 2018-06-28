@@ -25,7 +25,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,8 +37,9 @@ import com.funhotel.hmvp.model.viewmodel.NewViewModel;
 import com.funhotel.hmvp.presenter.NewPresenterImp;
 import com.funhotel.hmvp.ui.activity.AdvanceWebActivity;
 import com.zme.zlibrary.widget.recycler.SuperBaseAdapter;
+import com.zme.zlibrary.widget.recycler.WrapRecyclerView;
+import com.zme.zlibrary.widget.recycler.WrapRecyclerView.OnLoadMoreListener;
 import com.zme.zlibrary.widget.recycler.listener.OnItemClickListener;
-import com.zme.zlibrary.widget.recycler.WrapAdpter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,7 +61,7 @@ public class NewFragment extends Fragment implements OnRefreshListener, NewViewM
 
     private OnFragmentInteractionListener mListener;
 
-    private RecyclerView recyclerView;
+    private WrapRecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private SwipeRefreshLayout swipeRefreshLayout;
     private SuperBaseAdapter adapter;
@@ -184,24 +185,26 @@ public class NewFragment extends Fragment implements OnRefreshListener, NewViewM
 
 
     private void setupRecyclerView() {
-        linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        //布局从头部还是底部开始布局显示，默认从头部
-        linearLayoutManager.setReverseLayout(false);
-        linearLayoutManager.setAutoMeasureEnabled(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        //优化性能，设置ture 固定宽高，避免重新计算
-        recyclerView.setHasFixedSize(true);
+//        linearLayoutManager = new LinearLayoutManager(getContext());
+//        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//        //布局从头部还是底部开始布局显示，默认从头部
+//        linearLayoutManager.setReverseLayout(false);
+//        linearLayoutManager.setAutoMeasureEnabled(true);
+//        recyclerView.setLayoutManager(linearLayoutManager);
+//        //优化性能，设置ture 固定宽高，避免重新计算
+//        recyclerView.setHasFixedSize(true);
 
-        //分隔符
-        /*mRecyclerView.addItemDecoration(new Line(this,Line.VERTICAL_LIST));*/
-    /*recyclerView.setiLoadMoreListener(new ILoadMoreListener() {
-      @Override
-      public void onLoadMore() {
-        LogUtils.e(">>>>>>>load");
-     }
-    });*/
+//        GridLayoutManager manager=new GridLayoutManager(getContext(),2);
+//        recyclerView.setLayoutManager(manager);
 
+        StaggeredGridLayoutManager manager1=new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(manager1);
+        recyclerView.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                presenterImp.onStartHttp();
+            }
+        });
     }
 
     @Override
@@ -211,25 +214,29 @@ public class NewFragment extends Fragment implements OnRefreshListener, NewViewM
 
 
 
-
-
     @Override
     public void bindData(ResultEntity aNew) {
+        //不显示加载进度条
+        swipeRefreshLayout.setRefreshing(false);
         this.aNew = aNew;
-        if (aNew == null) {
+        if (aNew == null||aNew.getData()==null||aNew.getData().size()==0){
+            recyclerView.finishLoadMore(false,true);
             return;
         }
         if (adapter == null) {
             adapter = new MulItemNewAdapter(getActivity(), aNew.getData());
             adapter.setOnItemClickListener(this);
-            WrapAdpter wrapAdpter=new WrapAdpter(getContext(),adapter);
-            recyclerView.setAdapter(wrapAdpter);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setNoMoreData(false);
+
         } else {
-            adapter.resetData(aNew.getData());
-            adapter.notifyItemRangeChanged(0, aNew.getData().size());
+            recyclerView.finishLoadMore(true,false);
+            int start=adapter.getItemCount()-1;
+            adapter.addData(aNew.getData());
+            recyclerView.notifyItemRangeChanged(start,aNew.getData().size());
+            adapter.notifyItemRangeChanged(start, aNew.getData().size());
+
         }
-        //显示加载进度条
-        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override

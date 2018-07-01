@@ -98,4 +98,9 @@ public class MulItemNewAdapter extends MulItemBaseAdapter<DataEntity> implements
         }
         return R.layout.item_new_list_one_img;
     }
+
+    @Override
+    public List<DataEntity> getData() {
+        return super.getData();
+    }
 }

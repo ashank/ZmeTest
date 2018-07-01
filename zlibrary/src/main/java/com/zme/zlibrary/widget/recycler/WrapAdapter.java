@@ -3,13 +3,13 @@ package com.zme.zlibrary.widget.recycler;
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import com.zme.zlibrary.R;
 
 /**
@@ -29,17 +29,27 @@ public class WrapAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private View mFooterView;
     private BaseViewHolder mBaseViewHodler;
 
+    private OnClickListener mOnClickListener;
+
     public WrapAdapter(Context context, RecyclerView.Adapter adapter) {
         this.mContext = context;
         this.mAdapter = adapter;
         mLayoutInflater = LayoutInflater.from(context);
     }
 
+    public Adapter getAdapter() {
+        return mAdapter;
+    }
+
+    public void setOnClickListener(OnClickListener mOnClickListener) {
+        this.mOnClickListener = mOnClickListener;
+    }
+
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == VIEW_FOOTER || mAdapter == null) {
             mFooterView = mLayoutInflater.inflate(R.layout.view_load_more, parent, false);
-            mBaseViewHodler = new BaseViewHolder(mContext, mFooterView,
+            mBaseViewHodler = new BaseViewHolder(mContext, mFooterView,mOnClickListener,
                     null, null, null);
             return mBaseViewHodler;
         } else {
@@ -49,12 +59,21 @@ public class WrapAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
-        if (mAdapter != null && position < getItemCount() - 1) {
+        Log.e("TAG", "getItemCount: " + this.getItemCount()  +"  "+ mAdapter.getItemCount() );
+        if(getItemCount()==1){
+            mBaseViewHodler.setItemViewVisible(View.GONE);
+            mBaseViewHodler.setText(R.id.tv,"没有更多数据了");
+        }else if (mAdapter != null && position < getItemCount() - 1) {
             mAdapter.onBindViewHolder(holder, position);
         } else {
-            LinearLayout.LayoutParams linearLayoutCompat = (LayoutParams) holder.getView(R.id.tv).getLayoutParams();
-            linearLayoutCompat.gravity = Gravity.CENTER;
-            holder.getView(R.id.tv).setLayoutParams(linearLayoutCompat);
+            if (position==getItemCount()-1){
+                mBaseViewHodler.setItemViewVisible(View.VISIBLE);
+                mBaseViewHodler.setVisible(R.id.load,View.GONE);
+                mBaseViewHodler.setText(R.id.tv,"点击加载更多");
+            }else {
+                mBaseViewHodler.setItemViewVisible(View.GONE);
+                mBaseViewHodler.setText(R.id.tv,"没有更多数据了");
+            }
         }
     }
 

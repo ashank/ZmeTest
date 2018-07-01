@@ -75,7 +75,7 @@ android {
         debug {
             //debug模式下，显示log
             buildConfigField("boolean", "LOG_DEBUG", "true")
-            debuggable false // 是否保留调试信息
+            debuggable true // 是否保留调试信息
             minifyEnabled false //是否混淆
             zipAlignEnabled false // 包优化
             shrinkResources false // 移除不必要的资源
@@ -89,6 +89,7 @@ android {
             minifyEnabled true //是否混淆
             zipAlignEnabled true // 包优化
             shrinkResources true // 移除不必要的资源
+            debuggable false
             // 代码混淆规则文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
@@ -186,6 +187,8 @@ dependencies {
     implementation 'com.android.support:support-v4:27.1.1'
     androidTestImplementation 'junit:junit:4.12'
     api project(':zlibrary')
+
+
 
     //ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:1.1.1"

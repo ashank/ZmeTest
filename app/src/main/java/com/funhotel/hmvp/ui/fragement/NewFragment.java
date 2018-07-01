@@ -16,6 +16,7 @@
 
 package com.funhotel.hmvp.ui.fragement;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -25,8 +26,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,10 +37,14 @@ import com.funhotel.hmvp.model.entity.NewEntity.ResultEntity;
 import com.funhotel.hmvp.model.viewmodel.NewViewModel;
 import com.funhotel.hmvp.presenter.NewPresenterImp;
 import com.funhotel.hmvp.ui.activity.AdvanceWebActivity;
+import com.zme.zlibrary.base.BaseFragment;
 import com.zme.zlibrary.widget.recycler.SuperBaseAdapter;
+import com.zme.zlibrary.widget.recycler.WrapLinearLayoutManager;
 import com.zme.zlibrary.widget.recycler.WrapRecyclerView;
 import com.zme.zlibrary.widget.recycler.WrapRecyclerView.OnLoadMoreListener;
 import com.zme.zlibrary.widget.recycler.listener.OnItemClickListener;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,7 +54,7 @@ import com.zme.zlibrary.widget.recycler.listener.OnItemClickListener;
  * Use the {@link NewFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NewFragment extends Fragment implements OnRefreshListener, NewViewModel,
+public class NewFragment extends BaseFragment implements OnRefreshListener, NewViewModel,
         OnItemClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -69,6 +74,15 @@ public class NewFragment extends Fragment implements OnRefreshListener, NewViewM
 
     private NewPresenterImp presenterImp;
     int lastVisibleItem=0;
+
+    private boolean isRefresh=true;
+
+    private AlertDialog alertDialog;
+    private AlertDialog.Builder alertDialogBuilder;
+
+    private List<ResultEntity.DataEntity> list=new ArrayList<>();
+
+
 
     public NewFragment() {
         // Required empty public constructor
@@ -103,6 +117,7 @@ public class NewFragment extends Fragment implements OnRefreshListener, NewViewM
     }
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -117,13 +132,17 @@ public class NewFragment extends Fragment implements OnRefreshListener, NewViewM
         super.onActivityCreated(savedInstanceState);
         setupRefreshLayout();
         setupRecyclerView();
-        presenterImp = new NewPresenterImp(type);
-        presenterImp.attachView(this);
+        presenterImp = new NewPresenterImp(this,type);
+        presenterImp.onRefresh();
+    }
+
+    @Override
+    protected void onLayout() {
+
     }
 
     @Override
     public void onResume() {
-        swipeRefreshLayout.setRefreshing(true);
         super.onResume();
     }
 
@@ -185,74 +204,116 @@ public class NewFragment extends Fragment implements OnRefreshListener, NewViewM
 
 
     private void setupRecyclerView() {
-//        linearLayoutManager = new LinearLayoutManager(getContext());
-//        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//        //布局从头部还是底部开始布局显示，默认从头部
-//        linearLayoutManager.setReverseLayout(false);
-//        linearLayoutManager.setAutoMeasureEnabled(true);
-//        recyclerView.setLayoutManager(linearLayoutManager);
-//        //优化性能，设置ture 固定宽高，避免重新计算
-//        recyclerView.setHasFixedSize(true);
-
-//        GridLayoutManager manager=new GridLayoutManager(getContext(),2);
-//        recyclerView.setLayoutManager(manager);
-
-        StaggeredGridLayoutManager manager1=new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(manager1);
+        linearLayoutManager = new WrapLinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        //布局从头部还是底部开始布局显示，默认从头部
+        linearLayoutManager.setReverseLayout(false);
+        linearLayoutManager.setAutoMeasureEnabled(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        //优化性能，设置ture 固定宽高，避免重新计算
+        recyclerView.setHasFixedSize(true);
         recyclerView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                presenterImp.onStartHttp();
+                presenterImp.onLoadMore();
             }
         });
+        adapter = new MulItemNewAdapter(getActivity(), list);
+        adapter.setOnItemClickListener(this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setNoMoreData(true);
+        isRefresh=true;
     }
 
     @Override
     public void onRefresh() {
-        presenterImp.onStartHttp();
+        isRefresh=true;
+        swipeRefreshLayout.setRefreshing(true);
+        presenterImp.onRefresh();
     }
 
 
-
     @Override
-    public void bindData(ResultEntity aNew) {
-        //不显示加载进度条
-        swipeRefreshLayout.setRefreshing(false);
-        this.aNew = aNew;
-        if (aNew == null||aNew.getData()==null||aNew.getData().size()==0){
-            recyclerView.finishLoadMore(false,true);
-            return;
-        }
-        if (adapter == null) {
-            adapter = new MulItemNewAdapter(getActivity(), aNew.getData());
-            adapter.setOnItemClickListener(this);
-            recyclerView.setAdapter(adapter);
-            recyclerView.setNoMoreData(false);
+    public void onLoadingView(int pageIndex,int type) {
+        //UI
+        if (pageIndex==0 && isVisible ){
+            if (alertDialog==null){
+                alertDialogBuilder = new AlertDialog.Builder(getContext());
+                alertDialog=alertDialogBuilder.setTitle("加载提示").setMessage("正在加载中"+NewFragment.this.type).create();
+            }
+            if (!alertDialog.isShowing()){
+                alertDialog.show();
+            }
 
-        } else {
+            Log.e("TAG", "onLoadingView: "+ NewFragment.this.type);
+        }
+    }
+    @Override
+    public void onLoadDataSuccess(Object t, int pageIndex, int type) {
+        if (isVisible()&&alertDialog!=null&&alertDialog.isShowing()){
+            alertDialog.dismiss();
+        }
+        if (pageIndex==0){
+            //不显示加载进度条
+            swipeRefreshLayout.setRefreshing(false);
+        }
+        this.aNew = (ResultEntity)t;
+        if (pageIndex==0){
+            adapter.resetData(aNew.getData());
+            recyclerView.notifyDataChange();
+            isRefresh=false;
+            recyclerView.setNoMoreData(false);
+        }else if (pageIndex>0){
             recyclerView.finishLoadMore(true,false);
             int start=adapter.getItemCount()-1;
             adapter.addData(aNew.getData());
             recyclerView.notifyItemRangeChanged(start,aNew.getData().size());
-            adapter.notifyItemRangeChanged(start, aNew.getData().size());
-
         }
     }
 
     @Override
+    public void onLoadDataFailure(Object t, int pageIndex, int type) {
+        alertDialog.dismiss();
+        if (pageIndex==0){
+            //第一次，或者刷新
+            alertDialog.setTitle("加载提示");
+            alertDialog.setMessage("加载失败");
+            if (!alertDialog.isShowing()){
+                alertDialog.show();
+            }
+            recyclerView.setNoMoreData(true);
+        }else {
+            recyclerView.finishLoadMore(false,false);
+        }
+
+    }
+
+
+    @Override
     public void onItemClick(View view, int postion) {
+        List<ResultEntity.DataEntity> entities=((MulItemNewAdapter)adapter).getData();
+        if (entities==null||entities.size()==0||postion>entities.size()-1){
+            Log.e("TAG", "onItemClick: "+postion);
+            return;
+        }
         Intent intent = new Intent();
         intent.setClass(getActivity(), AdvanceWebActivity.class);
-        intent.putExtra("URL", aNew.getData().get(postion).getUrl());
-        intent.putExtra("TITLE", aNew.getData().get(postion).getTitle());
+        intent.putExtra("URL", entities.get(postion).getUrl());
+        intent.putExtra("TITLE", entities.get(postion).getTitle());
         startActivity(intent);
     }
 
     @Override
-    public void onStartHttp() {
-        swipeRefreshLayout.setRefreshing(true);
+    public void onDestroyView() {
+        super.onDestroyView();
+        isRefresh=true;
+        /*if (adapter!=null){
+            adapter.deleteAllData();
+        }
+        if (recyclerView!=null){
+            recyclerView.notifyDataChange();
+        }*/
     }
-
 }
 
 

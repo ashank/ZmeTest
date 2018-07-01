@@ -27,15 +27,6 @@ import com.zme.zlibrary.base.BasePresenter;
  * Version：1.0
  */
 public interface NewPresenter extends BasePresenter<NewViewModel> {
-
-  void onCreate();
-
-  void onResume();
-
-  void onPause();
-
-  void onStop();
-
-  void onDestroy();
+  
 
 }

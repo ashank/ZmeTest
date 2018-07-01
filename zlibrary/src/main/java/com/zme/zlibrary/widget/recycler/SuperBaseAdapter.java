@@ -118,13 +118,14 @@ public abstract class SuperBaseAdapter<T> extends RecyclerView.Adapter<BaseViewH
 
     @Override
     public void resetData(List<T> list) {
-        if (this.mDatas != null) {
+        if (mDatas == null) {
+            return;
+        }
+        int preSize = this.mDatas.size();
+        if(preSize > 0) {
             this.mDatas.clear();
         }
-        if (mDatas != null) {
-            this.mDatas.addAll(list);
-        }
-        notifyDataSetChanged();
+        this.mDatas.addAll(list);
     }
 
     @Override
@@ -133,13 +134,11 @@ public abstract class SuperBaseAdapter<T> extends RecyclerView.Adapter<BaseViewH
             return;
         }
         this.mDatas.addAll(list);
-        notifyDataSetChanged();
     }
 
     @Override
     public void addData(T t) {
         this.mDatas.add(t);
-        notifyDataSetChanged();
     }
 
     @Override
@@ -148,7 +147,6 @@ public abstract class SuperBaseAdapter<T> extends RecyclerView.Adapter<BaseViewH
             return;
         }
         mDatas.remove(position);
-        notifyDataSetChanged();
     }
 
     @Override
@@ -156,8 +154,14 @@ public abstract class SuperBaseAdapter<T> extends RecyclerView.Adapter<BaseViewH
         if (this.mDatas == null) {
             return;
         }
-        mDatas.clear();
-        notifyDataSetChanged();
+        int preSize = this.mDatas.size();
+        if(preSize > 0) {
+            this.mDatas.clear();
+        }
     }
 
+    @Override
+    public List<T> getData() {
+        return mDatas;
+    }
 }

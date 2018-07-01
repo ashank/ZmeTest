@@ -40,4 +40,7 @@ public interface IDataAction<T> {
      * 删除所有的数据
      */
     void deleteAllData();
+
+    
+    List<T> getData();
 }

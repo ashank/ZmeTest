@@ -16,8 +16,7 @@
 
 package com.funhotel.hmvp.model.viewmodel;
 
-import com.funhotel.hmvp.model.entity.NewEntity;
-import com.zme.zlibrary.base.BaseView;
+import com.zme.zlibrary.base.BaseListView;
 
 /**
  * Description ：NewViewModel
@@ -26,12 +25,9 @@ import com.zme.zlibrary.base.BaseView;
  * Modify Time：2018/4/18 22:37
  * Version：1.0
  */
-public interface NewViewModel extends BaseView {
+public interface NewViewModel extends BaseListView {
 
 
-  void bindData( NewEntity.ResultEntity aNew);
-
-  void onStartHttp();
 
 
 }

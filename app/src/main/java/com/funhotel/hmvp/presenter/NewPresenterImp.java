@@ -16,11 +16,13 @@
 
 package com.funhotel.hmvp.presenter;
 
+import android.support.annotation.NonNull;
 import com.funhotel.hmvp.model.entity.NewEntity;
 import com.funhotel.hmvp.model.http.HttpManager;
 import com.funhotel.hmvp.model.viewmodel.NewViewModel;
+import com.zme.zlibrary.base.AbstractListPresenter;
+import com.zme.zlibrary.base.BaseView;
 import com.zme.zlibrary.data.http.HttpConstant;
-import com.zme.zlibrary.utils.LogUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,97 +34,69 @@ import retrofit2.Response;
  * Modify Time：2018/4/18 22:44
  * Version：1.0
  */
-public class NewPresenterImp implements NewPresenter {
-
+public class NewPresenterImp extends AbstractListPresenter {
   private NewViewModel newViewModel;
   private String type;
+  private  HttpManager httpManager;
 
-  public NewPresenterImp(String type) {
+  public NewPresenterImp(@NonNull NewViewModel newViewModel, String type) {
+    super(newViewModel);
+    this.newViewModel=newViewModel;
     this.type = type;
+    httpManager = HttpManager.getInstance(HttpConstant.BASE_URL);
   }
 
   @Override
-  public void attachView(final NewViewModel view) {
-    this.newViewModel=view;
+  public void onRefresh() {
+    super.onRefresh();
     onStartHttp();
   }
 
-  public void onStartHttp(){
+  @Override
+  public void onLoadMore() {
+    super.onLoadMore();
+    onStartHttp();
+  }
+
+  private void onStartHttp(){
     if (newViewModel!=null){
-      newViewModel.onStartHttp();
+      newViewModel.onLoadingView(pageIndex,0);
     }
-    HttpManager httpManager = HttpManager.getInstance(HttpConstant.BASE_URL);
+
     httpManager.getNewA(type, new Callback<NewEntity>() {
       @Override
       public void onResponse(Call<NewEntity> call, Response<NewEntity> response) {
-
         NewEntity entity = response.body();
         if (null == entity) {
-          LogUtils.e("entity为空");
-          if (null != newViewModel) {
-            newViewModel.bindData(null);
-          }
+          newViewModel.onLoadDataFailure(null,pageIndex,0);
           return;
         }
-        LogUtils.e("entity==" + entity.getReason() + ">>>>>" + entity.getError_code());
         NewEntity.ResultEntity anew = entity.getResult();
-        if (null == anew) {
-          LogUtils.e("New为空");
-          if (null != newViewModel) {
-            newViewModel.bindData(null);
-          }
+        if (null == anew||anew.getData()==null||anew.getData().size()==0) {
+          newViewModel.onLoadDataFailure(null,pageIndex,0);
           return;
         }
-        if (null != newViewModel) {
-          newViewModel.bindData(anew);
-        }
+        newViewModel.onLoadDataSuccess(anew,pageIndex,1);
       }
       @Override
       public void onFailure(Call<NewEntity> call, Throwable t) {
-        if (null!=newViewModel){
-          newViewModel.bindData(null);
-        }
-
+        newViewModel.onLoadDataFailure(null,pageIndex,0);
+        pageIndex--;
       }
     });
   }
 
-
   @Override
-  public void detachView() {
-    newViewModel = null;
-  }
+  public void attachView(BaseView baseView) {
 
-  public NewViewModel getNewViewModel() {
-    return newViewModel;
-  }
-
-  public void setNewViewModel(NewViewModel newViewModel) {
-    this.newViewModel = newViewModel;
-  }
-
-  @Override
-  public void onCreate() {
+    //加载一些数据
 
   }
 
   @Override
-  public void onResume() {
+  public void detachView() {
 
+    //干掉
   }
 
-  @Override
-  public void onPause() {
-
-  }
-
-  @Override
-  public void onStop() {
-
-  }
-
-  @Override
-  public void onDestroy() {
-
-  }
 }

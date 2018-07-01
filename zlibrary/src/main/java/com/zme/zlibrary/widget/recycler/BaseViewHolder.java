@@ -46,6 +46,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder implements OnClickLi
     private OnItemLongClickListener onItemLongClickListner;
     private OnItemClickListener onItemClickListner;
     private OnItemTouchListener onItemTouchListener;
+    private OnClickListener mOnClickListener;
 
     public BaseViewHolder(Context context, View itemView,
         OnItemClickListener onItemClickListner,
@@ -58,6 +59,24 @@ public class BaseViewHolder extends RecyclerView.ViewHolder implements OnClickLi
         this.onItemTouchListener=onItemTouchListener;
         this.onItemLongClickListner=onItemLongClickListner;
         this.onItemClickListner=onItemClickListner;
+        itemView.setOnClickListener(this);
+        itemView.setOnLongClickListener(this);
+        /*itemView.setOnTouchListener(this);*/
+    }
+
+    public BaseViewHolder(Context context, View itemView,
+            OnClickListener mOnClickListener,
+            OnItemClickListener onItemClickListner,
+            OnItemLongClickListener onItemLongClickListner,
+            OnItemTouchListener onItemTouchListener) {
+        super(itemView);
+        this.mContext = context;
+        views = new SparseArray<>();
+        this.itemView=itemView;
+        this.onItemTouchListener=onItemTouchListener;
+        this.onItemLongClickListner=onItemLongClickListner;
+        this.onItemClickListner=onItemClickListner;
+        this.mOnClickListener=mOnClickListener;
         itemView.setOnClickListener(this);
         itemView.setOnLongClickListener(this);
         /*itemView.setOnTouchListener(this);*/
@@ -81,6 +100,11 @@ public class BaseViewHolder extends RecyclerView.ViewHolder implements OnClickLi
             views.put(viewId, view);
         }
         return (T) view;
+    }
+
+
+    public void setItemViewVisible(int visible){
+        this.itemView.setVisibility(visible);
     }
 
 
@@ -262,10 +286,18 @@ public class BaseViewHolder extends RecyclerView.ViewHolder implements OnClickLi
 
     @Override
     public void onClick(View v) {
-        Log.e("TAG", "onClick:sdsdddsdd"+getAdapterPosition() );
+
+        if (mOnClickListener!=null){
+            Log.e("TAG", "onClick 2222222~: " );
+            mOnClickListener.onClick(v);
+            return;
+        }
+        Log.e("TAG", "onClick : "+getAdapterPosition() );
         if (onItemClickListner!=null){
             onItemClickListner.onItemClick(getItemView(),getAdapterPosition());
+
         }
+
     }
 
     @Override
@@ -294,4 +326,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder implements OnClickLi
     }
 
 
+    public void setOnClickListener(OnClickListener mOnClickListener) {
+        this.mOnClickListener = mOnClickListener;
+    }
 }

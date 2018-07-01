@@ -109,7 +109,15 @@ public class HttpManager {
   public void getNewA(String type, Callback<NewEntity> callback) {
     Call<NewEntity> call = httpService.getNew1("APPCODE 4698d85543574f4d9c12a2fc889c5814", type);
     call.enqueue(callback);
+
   }
+
+
+  //取消
+  public void cancelRequest(){
+
+  }
+
 
 
 }

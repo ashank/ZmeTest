@@ -5,4 +5,8 @@ package com.zme.zlibrary.base;
  */
 
 public interface BaseView {
+
+
+
+
 }

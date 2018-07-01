@@ -6,7 +6,7 @@ package com.zme.zlibrary.base;
 
 public interface BasePresenter<V extends BaseView> {
 
-    void attachView(V view);
-
+    void attachView(V v);
     void detachView();
+
 }

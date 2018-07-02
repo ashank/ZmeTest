@@ -22,6 +22,8 @@ public class HttpManager {
   private static volatile HttpManager httpManager;
   private static final int DEFAULT_TIMEOUT = 5 * 1000;
 
+  private static  IHttpRequestListener<Object> iHttpRequestListener;
+
   /**
    * HttpManager 构造器
    * @param url Http 请求的公共URL部分
@@ -59,14 +61,9 @@ public class HttpManager {
     return httpManager;
   }
 
-  /**
-   * 获取
-   * @param resourceSubscriber resourceSubscriber
-   */
-  public  <T> void getCalendar(String date,@NonNull  ResourceSubscriber<T>  resourceSubscriber)  {
-    Flowable<Calendar> flowable = httpService.getCalendar(date)
-        .map(new HttpResultFunction<Calendar>());
-    toSubscribe(flowable, resourceSubscriber);
+  public  void setiHttpRequestListener(
+          IHttpRequestListener<Object> iHttpRequestListener) {
+    HttpManager.iHttpRequestListener = iHttpRequestListener;
   }
 
   private <T> void toSubscribe(@NonNull Flowable flowable,@NonNull ResourceSubscriber<T> resourceSubscriber) {
@@ -75,6 +72,34 @@ public class HttpManager {
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(resourceSubscriber);
   }
+
+
+  public void getNewList(String channel,String num,String start){
+    Flowable<BaseEntity<NewEntityNew>> flowable=httpService.getNewList(channel,num,start).map(new HttpResultFunction());
+    toSubscribe(flowable, new ResourceSubscriber<NewEntityNew>() {
+      @Override
+      public void onNext(NewEntityNew o) {
+        if (iHttpRequestListener!=null){
+          iHttpRequestListener.onSuccess(o);
+        }
+      }
+
+      @Override
+      public void onError(Throwable t) {
+        if (iHttpRequestListener!=null){
+          iHttpRequestListener.onFail(t,"加载失败");
+        }
+      }
+
+      @Override
+      public void onComplete() {
+      }
+    });
+
+
+  }
+
+
 
 
 }

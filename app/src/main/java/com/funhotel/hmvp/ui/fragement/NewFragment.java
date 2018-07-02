@@ -71,12 +71,8 @@ public class NewFragment extends BaseFragment implements OnRefreshListener, NewV
     private SwipeRefreshLayout swipeRefreshLayout;
     private SuperBaseAdapter adapter;
     private ResultEntity aNew;
-
     private NewPresenterImp presenterImp;
-    int lastVisibleItem=0;
-
     private boolean isRefresh=true;
-
     private AlertDialog alertDialog;
     private AlertDialog.Builder alertDialogBuilder;
 
@@ -244,12 +240,11 @@ public class NewFragment extends BaseFragment implements OnRefreshListener, NewV
             if (!alertDialog.isShowing()){
                 alertDialog.show();
             }
-
-            Log.e("TAG", "onLoadingView: "+ NewFragment.this.type);
         }
     }
     @Override
     public void onLoadDataSuccess(Object t, int pageIndex, int type) {
+
         if (isVisible()&&alertDialog!=null&&alertDialog.isShowing()){
             alertDialog.dismiss();
         }
@@ -260,7 +255,8 @@ public class NewFragment extends BaseFragment implements OnRefreshListener, NewV
         this.aNew = (ResultEntity)t;
         if (pageIndex==0){
             adapter.resetData(aNew.getData());
-            recyclerView.notifyDataChange();
+            /*recyclerView.notifyDataChange();*/
+            recyclerView.notifyItemRangeChanged(0,aNew.getData().size());
             isRefresh=false;
             recyclerView.setNoMoreData(false);
         }else if (pageIndex>0){
@@ -307,12 +303,24 @@ public class NewFragment extends BaseFragment implements OnRefreshListener, NewV
     public void onDestroyView() {
         super.onDestroyView();
         isRefresh=true;
-        /*if (adapter!=null){
+
+
+        if (alertDialog!=null){
+            alertDialog.dismiss();
+            alertDialog=null;
+        }
+
+        if (presenterImp!=null){
+            presenterImp.detachView();
+        }
+
+        if (adapter!=null){
             adapter.deleteAllData();
         }
         if (recyclerView!=null){
             recyclerView.notifyDataChange();
-        }*/
+        }
+
     }
 }
 

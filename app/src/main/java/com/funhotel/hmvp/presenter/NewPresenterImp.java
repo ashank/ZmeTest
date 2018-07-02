@@ -94,8 +94,7 @@ public class NewPresenterImp extends AbstractListPresenter {
   }
 
   @Override
-  public void detachView() {
-
+  public void   detachView() {
     //干掉
   }
 

@@ -17,21 +17,14 @@
 package com.funhotel.hmvp.ui.activity;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import butterknife.ButterKnife;
 import com.funhotel.hmvp.R;
-import com.zme.zlibrary.utils.LogUtils;
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
+import com.zme.zlibrary.data.http.HttpConstant;
+import com.zme.zlibrary.data.http.IHttpRequestListener;
+import com.zme.zlibrary.data.http.NewEntityNew;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * 权限页面的获取
@@ -46,57 +39,93 @@ public class RxJavaDemoActivity extends AppCompatActivity {
     setContentView(R.layout.activity_rx_java);
     ButterKnife.bind(this);
 
-    //创建一个上游
-    Observable.create(new ObservableOnSubscribe<Integer>() {
+//    //创建一个上游
+//    Observable.create(new ObservableOnSubscribe<Integer>() {
+//
+//      @Override
+//      public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+//        Log.d("所在的线程：", Thread.currentThread().getName());
+//        Log.d("发送的数据:", 1 + "");
+//        e.onNext(1);
+//        e.onNext(2);
+//        e.onNext(3);
+//
+//        e.onComplete();
+//        e.onNext(4);
+//      }
+//    })
+//        .subscribeOn(Schedulers.io())
+//        .observeOn(AndroidSchedulers.mainThread())
+//        .subscribe(new Observer<Integer>() {
+//          private int i;
+//
+//          @Override
+//          public void onSubscribe(Disposable d) {
+//            Log.e("Rxjava", "onSubscribe");
+//            disposable = d;
+//          }
+//
+//          @Override
+//          public void onNext(Integer integer) {
+//            Log.d("所在的线程：", Thread.currentThread().getName());
+//            Log.d("接收到的数据:", "integer:" + integer);
+//            Log.e("Rxjava", "onNext==" + integer);
+//            i++;
+//            if (i == 2) {
+//              disposable.dispose();
+//              Log.e("Rxjava", "disposable==" + disposable.isDisposed());
+//            }
+//
+//          }
+//          @Override
+//          public void onError(Throwable e) {
+//            Log.e("Rxjava", "onError");
+//          }
+//
+//          @Override
+//          public void onComplete() {
+//            Log.e("Rxjava", "onComplete");
+//          }
+//        });
 
-      @Override
-      public void subscribe(ObservableEmitter<Integer> e) throws Exception {
-        Log.d("所在的线程：", Thread.currentThread().getName());
-        Log.d("发送的数据:", 1 + "");
-        e.onNext(1);
-        e.onNext(2);
-        e.onNext(3);
+//      final HttpManager httpManager = HttpManager.getInstance(HttpConstant.BASE_URL);
+//      Flowable.interval(5*1000, TimeUnit.MILLISECONDS)
+//              .subscribeOn(Schedulers.io())
+//              .doOnNext(new Consumer<Long>() {
+//                  @Override
+//                  public void accept(Long aLong) throws Exception {
+//                      Log.e("TAG", "accept");
+//                      httpManager.getNewA("top", new Callback<NewEntity>() {
+//                          @Override
+//                          public void onResponse(Call<NewEntity> call, Response<NewEntity> response) {
+//                              Log.e("TAG", "onResponse: "+ response.body().getResult());
+//                              ((TextView)findViewById(R.id.tv)).setText("sdsdsdsdsd");
+//                          }
+//                          @Override
+//                          public void onFailure(Call<NewEntity> call, Throwable t) {
+//
+//                              Log.e("TAG", ": onFailure");
+//                          }
+//                      });
+//                  }
+//              }).subscribe();
 
-        e.onComplete();
-        e.onNext(4);
-      }
-    })
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Observer<Integer>() {
-          private int i;
 
-          @Override
-          public void onSubscribe(Disposable d) {
-            Log.e("Rxjava", "onSubscribe");
-            disposable = d;
-          }
+      com.zme.zlibrary.data.http.HttpManager.getInstance(HttpConstant.BASE_URL1).setiHttpRequestListener(
+              new IHttpRequestListener<Object>() {
+                  @Override
+                  public void onSuccess(Object o) {
+                      if (o instanceof NewEntityNew)
+                      Log.e("TAG", "onSuccess: " + ((NewEntityNew)o).getChannel());
+                  }
 
-          @Override
-          public void onNext(Integer integer) {
-            Log.d("所在的线程：", Thread.currentThread().getName());
-            Log.d("接收到的数据:", "integer:" + integer);
-            Log.e("Rxjava", "onNext==" + integer);
-            i++;
-            if (i == 2) {
-              disposable.dispose();
-              Log.e("Rxjava", "disposable==" + disposable.isDisposed());
-            }
+                  @Override
+                  public void onFail(Throwable t, String message) {
 
-          }
+                  }
+              });
 
-          @Override
-          public void onError(Throwable e) {
-            Log.e("Rxjava", "onError");
-          }
-
-          @Override
-          public void onComplete() {
-            Log.e("Rxjava", "onComplete");
-          }
-        });
-
-    HandlerThread handlerThread=new HandlerThread("myThread");
+    /*HandlerThread handlerThread=new HandlerThread("myThread");
     handlerThread.start();
 
      final Handler handler=new Handler(handlerThread.getLooper()){
@@ -105,10 +134,9 @@ public class RxJavaDemoActivity extends AppCompatActivity {
         LogUtils.e("current Thread=="+Thread.currentThread());
         super.handleMessage(msg);
       }
-
     };
     handler.sendEmptyMessage(1);
-
+*/
 
 
 

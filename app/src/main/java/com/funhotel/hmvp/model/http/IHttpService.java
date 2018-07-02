@@ -18,7 +18,6 @@ package com.funhotel.hmvp.model.http;
 
 import com.funhotel.hmvp.model.entity.New;
 import com.funhotel.hmvp.model.entity.NewEntity;
-import com.funhotel.hmvp.model.entity.NewEntity1;
 import io.reactivex.Flowable;
 import retrofit2.Call;
 import retrofit2.http.GET;

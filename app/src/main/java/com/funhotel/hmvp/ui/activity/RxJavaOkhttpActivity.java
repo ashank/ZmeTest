@@ -33,7 +33,6 @@ import com.funhotel.hmvp.adapter.ViewPaperAdapter;
 import com.funhotel.hmvp.model.entity.NewType;
 import com.funhotel.hmvp.ui.fragement.NewFragment;
 import com.funhotel.hmvp.ui.fragement.NewFragment.OnFragmentInteractionListener;
-import com.zme.zlibrary.data.http.Calendar;
 import com.zme.zlibrary.utils.LogUtils;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.subscribers.ResourceSubscriber;

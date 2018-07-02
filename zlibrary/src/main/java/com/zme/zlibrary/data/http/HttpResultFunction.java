@@ -14,8 +14,8 @@ public  class HttpResultFunction<T> implements Function<BaseEntity<T>, T> {
   @Override
   public T apply(BaseEntity<T> baseEntity) throws Exception {
     if (baseEntity.getStatus() != HttpConstant.HTTP_SUCCESS_STATUS) {
-      throw new ApiException(baseEntity.getStatus(), "apiException:"+baseEntity.getMessage());
+      throw new ApiException(baseEntity.getStatus(), "apiException:"+baseEntity.getMsg());
     }
-    return baseEntity.getData();
+    return baseEntity.getResult();
   }
 }

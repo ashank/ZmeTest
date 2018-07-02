@@ -2,6 +2,7 @@ package com.zme.zlibrary.data.http;
 
 import io.reactivex.Flowable;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Query;
 
 /**
@@ -17,12 +18,28 @@ import retrofit2.http.Query;
 
 public interface HttpService<T> extends ISuperHttpApi{
 
-  @GET("/open/api/lunar/json.shtml")
-  Flowable<BaseEntity<Calendar>> getCalendar(@Query("date") String date);
+  /**
+   * 获取新闻类型
+   */
+  @Headers("Authorization: APPCODE 4698d85543574f4d9c12a2fc889c5814")
+  @GET("/news/channel")
+  Flowable<BaseEntity<T>> getNewType();
 
 
-  @GET("/toutiao/index")
-  Flowable<BaseEntity<Calendar>> getNew(@Query("type") String type);
+
+  @Headers("Authorization: APPCODE 4698d85543574f4d9c12a2fc889c5814")
+  @GET("/news/get")
+  Flowable<BaseEntity<T>> getNewList(@Query("channel") String channel,@Query
+          ("num") String num,
+        @Query("start")  String start );
+
+
+
+  @Headers("Authorization: APPCODE 4698d85543574f4d9c12a2fc889c5814")
+  @GET("/news/search")
+  Flowable<BaseEntity<T>> searchNew(@Query("keyword") String keyword);
 
 
 }
+
+

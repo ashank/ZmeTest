@@ -23,4 +23,50 @@
   android:layout_height="match_parent"
   tools:context=".ui.activity.RxJavaActivity">
 
+  <android.support.constraint.Guideline
+    android:id="@+id/guide01"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_percent="0.55"/>
+
+  <android.support.constraint.Guideline
+    android:id="@+id/guide02"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintGuide_percent="0.43"/>
+
+  <android.support.constraint.Guideline
+    android:id="@+id/guide03"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintGuide_percent="0.9"/>
+
+
+  <android.support.constraint.Guideline
+    android:id="@+id/guide04"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintGuide_percent="1.0"/>
+
+  <android.support.constraint.Guideline
+    android:id="@+id/guideline2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintGuide_percent="0.29"
+    app:layout_constraintTop_toTopOf="parent"/>
+
+  <TextView
+    android:id="@+id/textView"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:background="@color/color_ED6E47"
+    android:gravity="center"
+    android:text="@string/app_name"
+    app:layout_constraintBottom_toTopOf="@id/guide02"
+    app:layout_constraintLeft_toRightOf="@id/guide01"/>
+
+
 </android.support.constraint.ConstraintLayout>

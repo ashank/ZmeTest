@@ -7,8 +7,8 @@ package com.zme.zlibrary.data.http;
 public class BaseEntity<T> {
 
   private int status;
-  private String message;
-  private T data;
+  private String msg;
+  private T result;
 
   public int getStatus() {
     return status;
@@ -18,19 +18,19 @@ public class BaseEntity<T> {
     this.status = status;
   }
 
-  public String getMessage() {
-    return message;
+  public String getMsg() {
+    return msg;
   }
 
-  public void setMessage(String message) {
-    this.message = message;
+  public void setMsg(String msg) {
+    this.msg = msg;
   }
 
-  public T getData() {
-    return data;
+  public T getResult() {
+    return result;
   }
 
-  public void setData(T data) {
-    this.data = data;
+  public void setResult(T result) {
+    this.result = result;
   }
 }

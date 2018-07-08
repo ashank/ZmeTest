@@ -1,8 +1,6 @@
 package com.zme.zlibrary.data.http;
 
-import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.ResourceSubscriber;
 import java.util.concurrent.TimeUnit;
@@ -15,14 +13,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by zhiyahan on 2017/3/28.
  * Http网络交互管理
  */
-public class HttpManager {
+public class HttpManager extends ResourceSubscriber {
 
   private static final String TAG = "HttpManager";
   private HttpService httpService;
   private static volatile HttpManager httpManager;
   private static final int DEFAULT_TIMEOUT = 5 * 1000;
-
-  private static  IHttpRequestListener<Object> iHttpRequestListener;
+  private  int pageIndex;
+  private static HttpRequestListener mHttpRequestListener;
 
   /**
    * HttpManager 构造器
@@ -34,14 +32,12 @@ public class HttpManager {
         = new OkHttpClient.Builder()
         .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
         .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-
     Retrofit retrofit = new Retrofit.Builder()
         .client(httpClientBuilder.build())
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .baseUrl(url)
         .build();
-
     //获取Service
     httpService = retrofit.create(HttpService.class);
   }
@@ -61,46 +57,65 @@ public class HttpManager {
     return httpManager;
   }
 
-  public  void setiHttpRequestListener(
-          IHttpRequestListener<Object> iHttpRequestListener) {
-    HttpManager.iHttpRequestListener = iHttpRequestListener;
+  public  void setHttpRequestListener(HttpRequestListener httpRequestListener) {
+    mHttpRequestListener = httpRequestListener;
   }
 
-  private <T> void toSubscribe(@NonNull Flowable flowable,@NonNull ResourceSubscriber<T> resourceSubscriber) {
-    flowable.subscribeOn(Schedulers.io())
-        .unsubscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(resourceSubscriber);
+  @SuppressWarnings("unchecked")
+  public void httpNewList(String channel,String start){
+    this.pageIndex ++;
+    httpService.getNewList(channel,String.valueOf(pageIndex),start)
+            .map(new HttpResultFunction(mHttpRequestListener,pageIndex))
+            .subscribeOn(Schedulers.io())
+            .unsubscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(this);
   }
 
+  @SuppressWarnings("unchecked")
+  public void httpNewType(){
+    httpService.getNewType()
+            .map(new HttpResultFunction(mHttpRequestListener,pageIndex))
+            .subscribeOn(Schedulers.io())
+            .unsubscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(this);
+  }
 
-  public void getNewList(String channel,String num,String start){
-    Flowable<BaseEntity<NewEntityNew>> flowable=httpService.getNewList(channel,num,start).map(new HttpResultFunction());
-    toSubscribe(flowable, new ResourceSubscriber<NewEntityNew>() {
-      @Override
-      public void onNext(NewEntityNew o) {
-        if (iHttpRequestListener!=null){
-          iHttpRequestListener.onSuccess(o);
-        }
-      }
-
-      @Override
-      public void onError(Throwable t) {
-        if (iHttpRequestListener!=null){
-          iHttpRequestListener.onFail(t,"加载失败");
-        }
-      }
-
-      @Override
-      public void onComplete() {
-      }
-    });
-
-
+  @SuppressWarnings("unchecked")
+  public void searchNew(String keyWord){
+    httpService.searchNew(keyWord)
+            .map(new HttpResultFunction(mHttpRequestListener,pageIndex))
+            .subscribeOn(Schedulers.io())
+            .unsubscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(this);
   }
 
 
 
+
+  @Override
+  @SuppressWarnings("unchecked")
+  public void onNext(Object entity) {
+    if (mHttpRequestListener!=null){
+      mHttpRequestListener.onRequestSuccess(entity,pageIndex);
+    }
+  }
+
+  @Override
+  public void onError(Throwable t) {
+    //错误要重置
+    pageIndex--;
+    if (mHttpRequestListener!=null){
+      mHttpRequestListener.onHttpFail(t,"加载失败",pageIndex);
+    }
+  }
+
+  @Override
+  public void onComplete() {
+
+  }
 
 }
 

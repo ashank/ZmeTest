@@ -6,15 +6,15 @@ package com.zme.zlibrary.data.http;
  */
 public class BaseEntity<T> {
 
-  private int status;
+  private String status;
   private String msg;
   private T result;
 
-  public int getStatus() {
+  public String getStatus() {
     return status;
   }
 
-  public void setStatus(int status) {
+  public void setStatus(String status) {
     this.status = status;
   }
 

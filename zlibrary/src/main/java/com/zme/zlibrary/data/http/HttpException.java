@@ -5,7 +5,7 @@ package com.zme.zlibrary.data.http;
  * http自定义异常
  */
 
-public class ApiException extends Exception {
+public class HttpException extends Exception {
 
     private int code;
     private String message;
@@ -15,7 +15,7 @@ public class ApiException extends Exception {
      * @param code  错误代码
      * @param message  错误消息
      */
-    public ApiException(int code, String message) {
+    public HttpException(int code, String message) {
         super(message);
         this.code = code;
         this.message = message;

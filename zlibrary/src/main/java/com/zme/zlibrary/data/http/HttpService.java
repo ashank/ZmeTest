@@ -1,6 +1,7 @@
 package com.zme.zlibrary.data.http;
 
 import io.reactivex.Flowable;
+import java.util.List;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Query;
@@ -16,23 +17,22 @@ import retrofit2.http.Query;
  * Zhiyahan on 2017/3/24 接口调用
  */
 
-public interface HttpService<T> extends ISuperHttpApi{
+public interface HttpService<T> {
 
   /**
    * 获取新闻类型
    */
   @Headers("Authorization: APPCODE 4698d85543574f4d9c12a2fc889c5814")
   @GET("/news/channel")
-  Flowable<BaseEntity<T>> getNewType();
+  Flowable<BaseEntity<List<String>>> getNewType();
 
 
 
   @Headers("Authorization: APPCODE 4698d85543574f4d9c12a2fc889c5814")
   @GET("/news/get")
-  Flowable<BaseEntity<T>> getNewList(@Query("channel") String channel,@Query
+  Flowable<BaseEntity<NewEntityNew>> getNewList(@Query("channel") String channel,@Query
           ("num") String num,
         @Query("start")  String start );
-
 
 
   @Headers("Authorization: APPCODE 4698d85543574f4d9c12a2fc889c5814")

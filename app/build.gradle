@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 //添加greenDao插件
 apply plugin: 'org.greenrobot.greendao'
+//引用
+/*apply from: 'tinkerpatch.gradle'*/
 
 //greendao 指定gen的目录，跑完之后会自动生成三个类
 greendao {
@@ -188,8 +190,6 @@ dependencies {
     androidTestImplementation 'junit:junit:4.12'
     api project(':zlibrary')
 
-
-
     //ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:1.1.1"
     // alternatively, just ViewModel
@@ -197,6 +197,10 @@ dependencies {
     // alternatively, just LiveData
     implementation "android.arch.lifecycle:livedata:1.1.1"
     annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+
+    // 若使用annotation需要单独引用,对于tinker的其他库都无需再引用
+ /*   api("com.tinkerpatch.tinker:tinker-android-anno:1.9.8")
+    implementation("com.tinkerpatch.sdk:tinkerpatch-android-sdk:1.2.8")*/
 
 
 }

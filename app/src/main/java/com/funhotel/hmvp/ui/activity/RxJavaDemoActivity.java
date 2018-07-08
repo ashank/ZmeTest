@@ -18,12 +18,8 @@ package com.funhotel.hmvp.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import butterknife.ButterKnife;
 import com.funhotel.hmvp.R;
-import com.zme.zlibrary.data.http.HttpConstant;
-import com.zme.zlibrary.data.http.IHttpRequestListener;
-import com.zme.zlibrary.data.http.NewEntityNew;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -109,21 +105,6 @@ public class RxJavaDemoActivity extends AppCompatActivity {
 //                      });
 //                  }
 //              }).subscribe();
-
-
-      com.zme.zlibrary.data.http.HttpManager.getInstance(HttpConstant.BASE_URL1).setiHttpRequestListener(
-              new IHttpRequestListener<Object>() {
-                  @Override
-                  public void onSuccess(Object o) {
-                      if (o instanceof NewEntityNew)
-                      Log.e("TAG", "onSuccess: " + ((NewEntityNew)o).getChannel());
-                  }
-
-                  @Override
-                  public void onFail(Throwable t, String message) {
-
-                  }
-              });
 
     /*HandlerThread handlerThread=new HandlerThread("myThread");
     handlerThread.start();

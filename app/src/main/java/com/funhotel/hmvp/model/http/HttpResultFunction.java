@@ -16,7 +16,7 @@
 
 package com.funhotel.hmvp.model.http;
 
-import com.zme.zlibrary.data.http.ApiException;
+import com.zme.zlibrary.data.http.HttpException;
 import io.reactivex.functions.Function;
 
 
@@ -33,7 +33,7 @@ public class HttpResultFunction<T> implements Function<BaseEntity<T>, T> {
   @Override
   public T apply(BaseEntity<T> baseEntity) throws Exception {
     if (baseEntity.getError_code() != HTTP_STATUS) {
-      throw new ApiException(baseEntity.getError_code(), "apiException:" + baseEntity.getReason());
+      throw new HttpException(baseEntity.getError_code(), "apiException:" + baseEntity.getReason());
     }
     return baseEntity.getData();
   }

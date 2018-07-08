@@ -11,6 +11,6 @@ package com.zme.zlibrary.data.http;
  */
 public class HttpStatusConstant {
 
-    private static String HTTP_SUCCESS = "0";
+    public static final String HTTP_STATUS_SUCCESS = "0";
 
 }

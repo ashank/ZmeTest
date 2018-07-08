@@ -28,6 +28,10 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
 
 
+        // TinkerPatch 插件
+       /* classpath "com.tinkerpatch.sdk:tinkerpatch-gradle-plugin:1.2.8"*/
+
+
 
     }
 }

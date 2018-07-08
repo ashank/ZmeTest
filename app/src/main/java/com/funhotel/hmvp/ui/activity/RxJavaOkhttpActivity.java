@@ -33,9 +33,7 @@ import com.funhotel.hmvp.adapter.ViewPaperAdapter;
 import com.funhotel.hmvp.model.entity.NewType;
 import com.funhotel.hmvp.ui.fragement.NewFragment;
 import com.funhotel.hmvp.ui.fragement.NewFragment.OnFragmentInteractionListener;
-import com.zme.zlibrary.utils.LogUtils;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.subscribers.ResourceSubscriber;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,35 +58,6 @@ public class RxJavaOkhttpActivity extends AppCompatActivity implements
         initView();
         setupToobar();
         setupViewPager();
-
-        //HttpManager httpManager = HttpManager.getInstance(HttpConstant.BASE_URL);
-//    httpManager.getCalendar("2018-03-27", new CalendarResourceSubscriber());
-
-    }
-
-    private class CalendarResourceSubscriber extends ResourceSubscriber<Calendar> {
-
-        @Override
-        public void onNext(Calendar calendar) {
-
-            LogUtils.e("onNext===" + calendar.toString());
-        }
-
-        @Override
-        public void onError(Throwable t) {
-            LogUtils.e("onError===" + t.toString());
-        }
-
-        @Override
-        public void onComplete() {
-            LogUtils.e("onComplete===");
-        }
-
-        @Override
-        protected void onStart() {
-            LogUtils.e("onStart===");
-            super.onStart();
-        }
 
     }
 

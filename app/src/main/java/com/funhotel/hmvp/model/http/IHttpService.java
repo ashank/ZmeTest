@@ -46,7 +46,7 @@ public interface IHttpService<T> {
 
 
   @GET("/news/get")
-  Call<NewEntity1> getNewList(@Header("Authorization") String authorization,@Query("type") String type);
+  Call<NewEntity> getNewList(@Header("Authorization") String authorization,@Query("type") String type);
 
 
 

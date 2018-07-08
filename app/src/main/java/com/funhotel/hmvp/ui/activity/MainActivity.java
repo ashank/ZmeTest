@@ -24,6 +24,7 @@ import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import com.funhotel.hmvp.R;
@@ -31,6 +32,10 @@ import com.funhotel.hmvp.adapter.MainListAdapter;
 import com.funhotel.hmvp.test.jni.JniDemo;
 import com.funhotel.hmvp.ui.activity.presentation.PresentationActivity;
 import com.zme.zlibrary.base.BaseActivity;
+import com.zme.zlibrary.data.http.HttpRequestListener;
+import com.zme.zlibrary.data.http.HttpServiceImp;
+import com.zme.zlibrary.data.http.NewEntityNew;
+import com.zme.zlibrary.data.http.NewType;
 import com.zme.zlibrary.widget.recycler.listener.OnItemClickListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +43,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends BaseActivity implements OnItemClickListener,
-    SwipeRefreshLayout.OnRefreshListener {
+    SwipeRefreshLayout.OnRefreshListener ,HttpRequestListener{
 
   private final static String TAG = "MainActivity";
   private RecyclerView mRecyclerView;
@@ -67,7 +72,57 @@ public class MainActivity extends BaseActivity implements OnItemClickListener,
     setupRefreshLayout();
     list = getList();
     setupRecyclerView();
+
+    //网络调用
+      HttpServiceImp
+              .with()
+              .addHeaders(null)
+              .init()
+              .setHttpRequestListener(this)
+              .getNewList("头条", "20", "0");
+
+      HttpServiceImp
+              .with()
+              .init()
+              .setHttpRequestListener(this)
+              .getNewType();
   }
+
+    @Override
+    public void onRequestSuccess(Object o, int pageIndex) {
+        if (o instanceof NewEntityNew) {
+            Log.e(TAG, "onRequestSuccess: " + ((NewEntityNew) o).getNum());
+        }else if (o instanceof List ){
+            Log.e(TAG, "onRequestSuccess: 2");
+            List<String > list = (List<String>)o;
+            if (list.isEmpty()){
+              return;
+            }
+          for (String string: list) {
+            Log.e(TAG, "onRequestSuccess: 2" +string);
+          }
+        } else {
+            Log.e(TAG, "onRequestSuccess: 3");
+        }
+    }
+
+    @Override
+    public void onRequestFail(Object o, int pageIndex) {
+      if (o instanceof NewEntityNew) {
+        Log.e(TAG, "onRequestFail: 1" );
+      }else if (o instanceof NewType){
+        Log.e(TAG, "onRequestFail: 2" );
+      } else {
+        Log.e(TAG, "onRequestFail: 3" );
+      }
+
+    }
+
+    @Override
+    public void onHttpFail(Throwable t, String message, int pageIndex) {
+        Log.e(TAG, "onHttpFail: ");
+
+    }
 
   @Override
   public void onResume() {

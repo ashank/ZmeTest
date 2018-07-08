@@ -1,5 +1,6 @@
 package com.zme.zlibrary.data.http;
 
+import android.util.Log;
 import io.reactivex.functions.Function;
 
 
@@ -9,13 +10,27 @@ import io.reactivex.functions.Function;
  *@param <T>  Subscriber 真正需要的数据类型，也就是Data部分的数据类型
  */
 public  class HttpResultFunction<T> implements Function<BaseEntity<T>, T> {
+  private HttpRequestListener<T> httpRequestListener;
+  private int pageIndex;
 
+  public HttpResultFunction(HttpRequestListener<T> httpRequestListener,int pageIndex) {
+    this.httpRequestListener= httpRequestListener;
+    this.pageIndex = pageIndex;
+  }
 
   @Override
-  public T apply(BaseEntity<T> baseEntity) throws Exception {
-    if (baseEntity.getStatus() != HttpConstant.HTTP_SUCCESS_STATUS) {
-      throw new ApiException(baseEntity.getStatus(), "apiException:"+baseEntity.getMsg());
+  public T apply(BaseEntity<T> baseEntity){
+    Log.e("TAG", "apply: "+baseEntity.getMsg() +" "+baseEntity.getStatus() );
+    if (baseEntity == null ){
+      httpRequestListener.onRequestFail(null,pageIndex);
+      return  null;
+    }else if (!HttpStatusConstant.HTTP_STATUS_SUCCESS.equals(baseEntity.getStatus()) ) {
+       httpRequestListener.onRequestFail(baseEntity.getResult(),pageIndex);
+      return  baseEntity.getResult();
+    }else {
+      return baseEntity.getResult();
     }
-    return baseEntity.getResult();
+
   }
+
 }

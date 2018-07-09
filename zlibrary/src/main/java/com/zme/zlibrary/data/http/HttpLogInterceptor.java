@@ -20,7 +20,7 @@ import okio.Buffer;
  * http拦截器，用于打印http信息
  */
 
-public class LogInterceptor implements Interceptor {
+public class HttpLogInterceptor implements Interceptor {
 
     private static final Charset UTF8 = Charset.forName("UTF-8");
 
@@ -98,11 +98,11 @@ public class LogInterceptor implements Interceptor {
         };
     }
 
-    public LogInterceptor() {
+    public HttpLogInterceptor() {
         this(Logger.DEFAULT);
     }
 
-    public LogInterceptor(Logger logger) {
+    public HttpLogInterceptor(Logger logger) {
         this.logger = logger;
     }
 
@@ -113,7 +113,7 @@ public class LogInterceptor implements Interceptor {
     /**
      * Change the level at which this interceptor logs.
      */
-    public LogInterceptor setLevel(Level level) {
+    public HttpLogInterceptor setLevel(Level level) {
         if (level == null) {
             throw new NullPointerException("level == null. Use Level.NONE instead.");
         }

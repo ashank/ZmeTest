@@ -46,6 +46,7 @@ public class OkHttpClientConfig {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(url);
 
+
         httpClientBuilder = new OkHttpClient.Builder();
     }
 
@@ -57,8 +58,12 @@ public class OkHttpClientConfig {
 
     public Retrofit initRetrofit ()  {
 
-        httpClientBuilder.readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
-                .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+        httpClientBuilder
+                //连接超时
+                .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+                .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+                //打印log
+                .addNetworkInterceptor(new HttpLogInterceptor());
         //添加Header
         if (headerMap !=null && !headerMap.isEmpty()){
             httpClientBuilder.addInterceptor(new Interceptor() {

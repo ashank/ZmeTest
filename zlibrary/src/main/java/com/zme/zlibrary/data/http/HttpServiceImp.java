@@ -77,6 +77,7 @@ public class HttpServiceImp<T> implements HttpService<T> {
     @SuppressWarnings("unchecked")
     @Override
     public Flowable<BaseEntity<NewEntityNew>> getNewList(String channel, String num, String start) {
+        pageIndex = Integer.valueOf(start);
         Flowable flowable=httpService.getNewList(channel,num,start)
                 .onBackpressureBuffer()
                 .map(new HttpResultFunction(mHttpRequestListener,pageIndex))

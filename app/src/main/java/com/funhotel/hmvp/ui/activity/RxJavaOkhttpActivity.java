@@ -28,21 +28,24 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.Toast;
 import com.funhotel.hmvp.R;
 import com.funhotel.hmvp.adapter.ViewPaperAdapter;
 import com.funhotel.hmvp.model.entity.NewType;
 import com.funhotel.hmvp.ui.fragement.NewFragment;
 import com.funhotel.hmvp.ui.fragement.NewFragment.OnFragmentInteractionListener;
+import com.zme.zlibrary.data.http.HttpRequestListener;
+import com.zme.zlibrary.data.http.HttpServiceImp;
 import io.reactivex.disposables.Disposable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RxJavaOkhttpActivity extends AppCompatActivity implements
-        OnFragmentInteractionListener {
+        OnFragmentInteractionListener,HttpRequestListener{
 
     private static final String TAG = "RxJavaOKHttpActivity";
     private Disposable dis;
-    private List<NewType> list = new ArrayList<>();
+    private List<String> list = new ArrayList<>();
     private Toolbar toolbar;
     private AppBarLayout appBarLayout;
     private TabLayout tabLayout;
@@ -54,9 +57,11 @@ public class RxJavaOkhttpActivity extends AppCompatActivity implements
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_rx_java_okhttp);
 
-        list = initNewTypeList();
+//        list = initNewTypeList();
         initView();
         setupToobar();
+
+        HttpServiceImp.with().init().setHttpRequestListener(this).getNewType();
         setupViewPager();
 
     }
@@ -88,7 +93,7 @@ public class RxJavaOkhttpActivity extends AppCompatActivity implements
         List<NewFragment> fragmentList = new ArrayList<>();
         int lenght = list.size();
         for (int i = 0; i < lenght; i++) {
-            fragmentList.add(NewFragment.newInstance(list.get(i).getCode()));
+            fragmentList.add(NewFragment.newInstance(list.get(i)));
         }
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         ViewPaperAdapter viewPagerAdapter = new ViewPaperAdapter(getSupportFragmentManager(), fragmentList,
@@ -97,6 +102,26 @@ public class RxJavaOkhttpActivity extends AppCompatActivity implements
         tabLayout.setupWithViewPager(viewPager);
     }
 
+
+    @Override
+    public void onRequestSuccess(Object o, int pageIndex) {
+         list = (List<String>)o;
+        if (list.isEmpty()){
+            Toast.makeText(this,"数据加载失败",Toast.LENGTH_LONG).show();
+            return;
+        }
+        setupViewPager();
+    }
+
+    @Override
+    public void onRequestFail(Object o, int pageIndex) {
+
+    }
+
+    @Override
+    public void onHttpFail(Throwable t, String message, int pageIndex) {
+
+    }
 
     private List<NewType> initNewTypeList() {
 

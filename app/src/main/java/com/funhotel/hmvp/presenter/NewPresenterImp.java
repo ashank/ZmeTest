@@ -17,15 +17,14 @@
 package com.funhotel.hmvp.presenter;
 
 import android.support.annotation.NonNull;
-import com.funhotel.hmvp.model.entity.NewEntity;
+import android.util.Log;
 import com.funhotel.hmvp.model.http.HttpManager;
 import com.funhotel.hmvp.model.viewmodel.NewViewModel;
 import com.zme.zlibrary.base.AbstractListPresenter;
 import com.zme.zlibrary.base.BaseView;
-import com.zme.zlibrary.data.http.HttpConstant;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.zme.zlibrary.data.http.HttpRequestListener;
+import com.zme.zlibrary.data.http.HttpServiceImp;
+import com.zme.zlibrary.data.http.NewEntityNew;
 
 /**
  * Description ：处理新闻的逻辑
@@ -34,16 +33,20 @@ import retrofit2.Response;
  * Modify Time：2018/4/18 22:44
  * Version：1.0
  */
-public class NewPresenterImp extends AbstractListPresenter {
+public class NewPresenterImp extends AbstractListPresenter implements HttpRequestListener<NewEntityNew> {
   private NewViewModel newViewModel;
   private String type;
   private  HttpManager httpManager;
+
+  private HttpServiceImp httpServiceImp;
+  private String pageSize="20";
 
   public NewPresenterImp(@NonNull NewViewModel newViewModel, String type) {
     super(newViewModel);
     this.newViewModel=newViewModel;
     this.type = type;
-    httpManager = HttpManager.getInstance(HttpConstant.BASE_URL);
+//    httpManager = HttpManager.getInstance(HttpConstant.BASE_URL);
+    httpServiceImp = HttpServiceImp.with().setHttpRequestListener(this).init();
   }
 
   @Override
@@ -55,6 +58,7 @@ public class NewPresenterImp extends AbstractListPresenter {
   @Override
   public void onLoadMore() {
     super.onLoadMore();
+    pageIndex++;
     onStartHttp();
   }
 
@@ -62,33 +66,37 @@ public class NewPresenterImp extends AbstractListPresenter {
     if (newViewModel!=null){
       newViewModel.onLoadingView(pageIndex,0);
     }
+    httpServiceImp.getNewList(type,pageSize,String.valueOf(pageIndex));
+  }
 
-    httpManager.getNewA(type, new Callback<NewEntity>() {
-      @Override
-      public void onResponse(Call<NewEntity> call, Response<NewEntity> response) {
-        NewEntity entity = response.body();
-        if (null == entity) {
-          newViewModel.onLoadDataFailure(null,pageIndex,0);
-          return;
-        }
-        NewEntity.ResultEntity anew = entity.getResult();
-        if (null == anew||anew.getData()==null||anew.getData().size()==0) {
-          newViewModel.onLoadDataFailure(null,pageIndex,0);
-          return;
-        }
-        newViewModel.onLoadDataSuccess(anew,pageIndex,1);
-      }
-      @Override
-      public void onFailure(Call<NewEntity> call, Throwable t) {
-        newViewModel.onLoadDataFailure(null,pageIndex,0);
-        pageIndex--;
-      }
-    });
+  @Override
+  public void onRequestSuccess(NewEntityNew o, int pageIndex) {
+    Log.e("TAG", "onRequestSuccess: ");
+    if (null == o) {
+      newViewModel.onLoadDataFailure(null,pageIndex,0);
+      return;
+    }
+    if ( o.getList().size()==0) {
+      newViewModel.onLoadDataFailure(o,pageIndex,0);
+      return;
+    }
+    newViewModel.onLoadDataSuccess(o,pageIndex,1);
+  }
+
+  @Override
+  public void onRequestFail(NewEntityNew o, int pageIndex) {
+    newViewModel.onLoadDataFailure(null,pageIndex,0);
+    this.pageIndex--;
+  }
+
+  @Override
+  public void onHttpFail(Throwable t, String message, int pageIndex) {
+    newViewModel.onLoadDataFailure(null,pageIndex,0);
+    this.pageIndex--;
   }
 
   @Override
   public void attachView(BaseView baseView) {
-
     //加载一些数据
 
   }

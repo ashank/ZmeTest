@@ -33,11 +33,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.funhotel.hmvp.R;
 import com.funhotel.hmvp.adapter.MulItemNewAdapter;
-import com.funhotel.hmvp.model.entity.NewEntity.ResultEntity;
 import com.funhotel.hmvp.model.viewmodel.NewViewModel;
 import com.funhotel.hmvp.presenter.NewPresenterImp;
 import com.funhotel.hmvp.ui.activity.AdvanceWebActivity;
 import com.zme.zlibrary.base.BaseFragment;
+import com.zme.zlibrary.data.http.NewEntityNew;
+import com.zme.zlibrary.data.http.NewEntityNew.ListEntity;
 import com.zme.zlibrary.widget.recycler.SuperBaseAdapter;
 import com.zme.zlibrary.widget.recycler.WrapLinearLayoutManager;
 import com.zme.zlibrary.widget.recycler.WrapRecyclerView;
@@ -70,13 +71,14 @@ public class NewFragment extends BaseFragment implements OnRefreshListener, NewV
     private LinearLayoutManager linearLayoutManager;
     private SwipeRefreshLayout swipeRefreshLayout;
     private SuperBaseAdapter adapter;
-    private ResultEntity aNew;
     private NewPresenterImp presenterImp;
     private boolean isRefresh=true;
     private AlertDialog alertDialog;
     private AlertDialog.Builder alertDialogBuilder;
 
-    private List<ResultEntity.DataEntity> list=new ArrayList<>();
+    private List<ListEntity> list=new ArrayList<>();
+
+    private  NewEntityNew newEntityNew ;
 
 
 
@@ -110,6 +112,7 @@ public class NewFragment extends BaseFragment implements OnRefreshListener, NewV
         if (TextUtils.isEmpty(type)) {
             type = "头条";
         }
+
     }
 
 
@@ -244,7 +247,6 @@ public class NewFragment extends BaseFragment implements OnRefreshListener, NewV
     }
     @Override
     public void onLoadDataSuccess(Object t, int pageIndex, int type) {
-
         if (isVisible()&&alertDialog!=null&&alertDialog.isShowing()){
             alertDialog.dismiss();
         }
@@ -252,18 +254,18 @@ public class NewFragment extends BaseFragment implements OnRefreshListener, NewV
             //不显示加载进度条
             swipeRefreshLayout.setRefreshing(false);
         }
-        this.aNew = (ResultEntity)t;
+        newEntityNew = (NewEntityNew)t;
         if (pageIndex==0){
-            adapter.resetData(aNew.getData());
+            adapter.resetData(newEntityNew.getList());
             /*recyclerView.notifyDataChange();*/
-            recyclerView.notifyItemRangeChanged(0,aNew.getData().size());
+            recyclerView.notifyItemRangeChanged(0,Integer.valueOf(newEntityNew.getNum()));
             isRefresh=false;
             recyclerView.setNoMoreData(false);
         }else if (pageIndex>0){
             recyclerView.finishLoadMore(true,false);
             int start=adapter.getItemCount()-1;
-            adapter.addData(aNew.getData());
-            recyclerView.notifyItemRangeChanged(start,aNew.getData().size());
+            adapter.addData(newEntityNew.getList());
+            recyclerView.notifyItemRangeChanged(start,Integer.valueOf(newEntityNew.getNum()));
         }
     }
 
@@ -287,7 +289,7 @@ public class NewFragment extends BaseFragment implements OnRefreshListener, NewV
 
     @Override
     public void onItemClick(View view, int postion) {
-        List<ResultEntity.DataEntity> entities=((MulItemNewAdapter)adapter).getData();
+        List<ListEntity> entities=((MulItemNewAdapter)adapter).getData();
         if (entities==null||entities.size()==0||postion>entities.size()-1){
             Log.e("TAG", "onItemClick: "+postion);
             return;

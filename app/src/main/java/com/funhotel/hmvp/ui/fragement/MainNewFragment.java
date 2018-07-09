@@ -13,9 +13,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import com.funhotel.hmvp.R;
 import com.funhotel.hmvp.adapter.ViewPaperAdapter;
 import com.funhotel.hmvp.model.entity.NewType;
+import com.zme.zlibrary.data.http.HttpRequestListener;
+import com.zme.zlibrary.data.http.HttpServiceImp;
 import io.reactivex.disposables.Disposable;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +31,7 @@ import java.util.List;
  * Use the {@link MainNewFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainNewFragment extends Fragment {
+public class MainNewFragment extends Fragment  implements HttpRequestListener{
 
   // TODO: Rename parameter arguments, choose names that match
   // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,7 +45,7 @@ public class MainNewFragment extends Fragment {
   private OnFragmentInteractionListener mListener;
 
   private Disposable dis;
-  private List<NewType> list = new ArrayList<>();
+  private List<String> list = new ArrayList<>();
   private Toolbar toolbar;
   private AppBarLayout appBarLayout;
   private TabLayout tabLayout;
@@ -91,8 +94,7 @@ public class MainNewFragment extends Fragment {
   @Override
   public void onActivityCreated(@Nullable Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-    list = initNewTypeList();
-    setupViewPager();
+    HttpServiceImp.with().init().setHttpRequestListener(this).getNewType();
   }
 
   private void initView(View view) {
@@ -109,7 +111,7 @@ public class MainNewFragment extends Fragment {
     List<NewFragment> fragmentList = new ArrayList<>();
     int lenght = list.size();
     for (int i = 0; i < lenght; i++) {
-      fragmentList.add(NewFragment.newInstance(list.get(i).getCode()));
+      fragmentList.add(NewFragment.newInstance(list.get(i)));
     }
     tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     ViewPaperAdapter viewPagerAdapter = new ViewPaperAdapter(getActivity().getSupportFragmentManager(), fragmentList,
@@ -118,6 +120,25 @@ public class MainNewFragment extends Fragment {
     tabLayout.setupWithViewPager(viewPager);
   }
 
+  @Override
+  public void onRequestSuccess(Object o, int pageIndex) {
+    list = (List<String>)o;
+    if (list.isEmpty()){
+      Toast.makeText(getContext(),"数据加载失败",Toast.LENGTH_LONG).show();
+      return;
+    }
+    setupViewPager();
+  }
+
+  @Override
+  public void onRequestFail(Object o, int pageIndex) {
+
+  }
+
+  @Override
+  public void onHttpFail(Throwable t, String message, int pageIndex) {
+
+  }
 
   private List<NewType> initNewTypeList() {
 

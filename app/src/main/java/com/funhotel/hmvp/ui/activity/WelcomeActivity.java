@@ -55,7 +55,7 @@ public class WelcomeActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 Intent intent = new Intent();
-                intent.setClass(WelcomeActivity.this, MainActivity.class);
+                intent.setClass(WelcomeActivity.this, HomeActivity.class);
                 startActivity(intent);
                 finish();
             }

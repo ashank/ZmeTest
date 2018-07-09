@@ -19,7 +19,6 @@ package com.funhotel.hmvp.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import com.funhotel.hmvp.model.entity.NewType;
 import com.funhotel.hmvp.ui.fragement.NewFragment;
 import java.util.List;
 
@@ -31,11 +30,11 @@ import java.util.List;
 public class ViewPaperAdapter extends FragmentPagerAdapter {
 
   private List<NewFragment> fragments;
-  private List<NewType> newTypes;
+  private List<String> newTypes;
   private int[] redIds;
 
 
-  public ViewPaperAdapter(FragmentManager fm, List<NewFragment> list, List<NewType> newTypes,
+  public ViewPaperAdapter(FragmentManager fm, List<NewFragment> list, List<String> newTypes,
       int[] resIds) {
     super(fm);
     // TODO Auto-generated constructor stub
@@ -59,7 +58,7 @@ public class ViewPaperAdapter extends FragmentPagerAdapter {
   @Override
   public CharSequence getPageTitle(int position) {
     // TODO Auto-generated method stub
-    return newTypes.get(position).getName();
+    return newTypes.get(position);
   }
 
   public void setFragments(List<NewFragment> fragments) {
@@ -67,7 +66,7 @@ public class ViewPaperAdapter extends FragmentPagerAdapter {
   }
 
 
-  public void setTitles(List<NewType> newTypes) {
+  public void setTitles(List<String> newTypes) {
     this.newTypes = newTypes;
   }
 

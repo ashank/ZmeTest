@@ -1,11 +1,8 @@
 package com.ashank.animation.application;
 
-import android.os.Environment;
-import android.util.Log;
 import com.alipay.euler.andfix.patch.PatchManager;
 import com.antfortune.freeline.FreelineCore;
 import com.zme.zlibrary.base.BaseApplication;
-import java.io.IOException;
 
 /**
  * CLASS ： MyApplication
@@ -25,19 +22,19 @@ public class MyApplication extends BaseApplication {
 
         //热修复
 //      String appversion= getgetPackageManager().getPackageInfo(getPackageName(),0).versionName;
-        patchManager = new PatchManager(this);
-        patchManager.init("1.0");//current version
-        patchManager.loadPatch();
+//        patchManager = new PatchManager(this);
+//        patchManager.init("1.0");//current version
+//        patchManager.loadPatch();
 
         // add patch at runtime /storage/emulated/0/out.apatch
-        try {
-            // .apatch file path
-            String patchFileString = Environment.getExternalStorageDirectory()
-                    .getAbsolutePath() + APATCH_PATH;
-            patchManager.addPatch(patchFileString);
-            Log.d("Huanlv", "apatch:" + patchFileString + " added.");
-        } catch (IOException e) {
-            Log.e("Huanlv", "Huanlv", e);
-        }
+//        try {
+//            // .apatch file path
+//            String patchFileString = Environment.getExternalStorageDirectory()
+//                    .getAbsolutePath() + APATCH_PATH;
+//            patchManager.addPatch(patchFileString);
+//            Log.d("Huanlv", "apatch:" + patchFileString + " added.");
+//        } catch (IOException e) {
+//            Log.e("Huanlv", "Huanlv", e);
+//        }
     }
 }

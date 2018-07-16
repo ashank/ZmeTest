@@ -26,7 +26,8 @@ import android.widget.Toast;
 public class AnimationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         GroupFragment.OnFragmentInteractionListener,
-        ActivityAnamitionFragment.OnFragmentInteractionListener {
+        ActivityAnamitionFragment.OnFragmentInteractionListener ,
+        PropertyFragment.OnFragmentInteractionListener{
 
     private FrameLayout frameLayout;
 
@@ -112,6 +113,8 @@ public class AnimationActivity extends AppCompatActivity
 
         } else if (id == R.id.property) {
             //属性动画
+
+            replaceFragment(new PropertyFragment());
 
         } else if (id == R.id.layoutanimation) {
 

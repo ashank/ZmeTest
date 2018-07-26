@@ -43,7 +43,7 @@ allprojects {
         jcenter()
         //这里添加maven的仓库,其中一定要添加maven的地址
         //maven{};
-        google()
+        //google()
     }
 }
 

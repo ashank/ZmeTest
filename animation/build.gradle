@@ -17,10 +17,10 @@ android {
 
     signingConfigs {
         releaseConfig {
-            keyAlias 'mvp'
-            keyPassword '123456'
-            storeFile file('mvp.jks')
-            storePassword '123456'
+            storeFile file(properties.getProperty("keystroe_storeFile"))
+            storePassword properties.getProperty("keystroe_storePassword")
+            keyAlias properties.getProperty("keystroe_keyAlias")
+            keyPassword properties.getProperty("keystroe_keyPassword")
         }
     }
 

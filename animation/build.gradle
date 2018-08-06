@@ -51,10 +51,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    //freeline
-    debugImplementation rootProject.ext.dependencies.freelinedebugCompile
-    releaseImplementation rootProject.ext.dependencies.freeline
-    testImplementation rootProject.ext.dependencies.freeline
+
     //anfix
     implementation rootProject.ext.dependencies.andfix
     implementation project(':zlibrary')

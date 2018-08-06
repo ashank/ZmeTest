@@ -14,6 +14,7 @@ android {
         multiDexEnabled true
     }
 
+    /**
     signingConfigs {
         releaseConfig {
             storeFile file(properties.getProperty("keystroe_storeFile"))
@@ -22,6 +23,7 @@ android {
             keyPassword properties.getProperty("keystroe_keyPassword")
         }
     }
+    */
 
     buildTypes {
         release {
@@ -30,7 +32,7 @@ android {
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //设置签名(不设置会导致apk无签名)
-            signingConfig signingConfigs.releaseConfig
+            //signingConfig signingConfigs.releaseConfig
         }
     }
 

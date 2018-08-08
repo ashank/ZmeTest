@@ -12,7 +12,6 @@
 
 # Generated files
 bin/
-gen/
 out/
 
 # Gradle files
@@ -84,21 +83,3 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
-
-animation/libs/
-app/libs/
-app/src/main/java/com/funhotel/hmvp/model/db/
-app/src/main/java/com/funhotel/hmvp/test/hareware/sensor/
-app/src/main/java/com/funhotel/hmvp/ui/dialog/
-app/src/main/libs/
-app/src/main/res/drawable/
-bluetooth/libs/
-funhotelplayer/libs/
-greendao/libs/
-greendao/src/main/java/com/zhi/
-greendao/src/main/res/drawable/
-kotlin/libs/
-kotlin/src/main/res/drawable/
-miracast/libs/
-zlibrary/src/main/java/com/zme/zlibrary/widget/listener/
-zlibrary/src/main/res/drawable/

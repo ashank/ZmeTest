@@ -54,8 +54,6 @@ android {
 
         //dex突破65535的限制
         multiDexEnabled true
-
-
         vectorDrawables.useSupportLibrary = true
 
     }

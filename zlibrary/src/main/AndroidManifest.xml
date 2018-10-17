@@ -8,6 +8,33 @@
 
         <activity android:name=".commonactivity.PermissionsActivity"/>
 
+
+        <activity
+          android:launchMode="singleTask"
+          android:name="com.tencent.tauth.AuthActivity"
+          android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data android:scheme="tencent222222"/>
+            </intent-filter>
+        </activity>
+
+
+        <activity
+          android:configChanges="orientation|keyboardHidden|screenSize"
+          android:name="com.tencent.connect.common.AssistActivity"
+          android:theme="@android:style/Theme.Translucent.NoTitleBar"
+          />
+
+        <!--微信-->
+        <activity
+          android:name=".wxapi.WXEntryActivity"
+          android:exported="true" />
+
     </application>
 
 

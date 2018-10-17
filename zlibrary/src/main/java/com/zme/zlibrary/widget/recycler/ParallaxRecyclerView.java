@@ -1,4 +1,4 @@
-package com.zme.zlibrary.widget.styleabletoast;
+package com.zme.zlibrary.widget.recycler;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -45,9 +45,6 @@ public class ParallaxRecyclerView extends RecyclerView {
       case MotionEvent.ACTION_UP:
         break;
     }
-
-
-
     return super.onInterceptTouchEvent(event);
   }
 }

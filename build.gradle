@@ -1,7 +1,9 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 apply from: "config.gradle"
 
-buildscript {
+buildscript { 
+    ext.kotlin_version = '1.2.41'
+
     //Kotlin的版本号
     rootProject.ext.kotlin_version = '1.2.41'
 
@@ -25,11 +27,8 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
 
-
         // TinkerPatch 插件
        /* classpath "com.tinkerpatch.sdk:tinkerpatch-gradle-plugin:1.2.8"*/
-
-
 
     }
 }

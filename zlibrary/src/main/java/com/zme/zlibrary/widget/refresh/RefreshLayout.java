@@ -48,8 +48,6 @@ import com.zme.zlibrary.widget.refresh.listener.OnRefreshListener;
  */
 public class RefreshLayout extends ViewGroup implements IRefresh{
 
-
-
     private AbstractHeader mHeaderView;
     private AbstractFooter mFooterView;
     private IHeader mIHeader;

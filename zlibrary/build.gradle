@@ -64,15 +64,17 @@ dependencies {
 
     api files('libs/nineoldandroids-2.4.0.jar')
     api rootProject.ext.dependencies.loadview
+
+    //微信分享
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.0.2'
 }
 
-//生成自己的jar包的命令配置
-//task makeJar(type: Copy) {
-//    delete 'build/libs/mysdk.jar'
-//    from('build/intermediates/bundles/release/')
-//    into('build/libs/')
-//    include('classes.jar')
-//    rename ('classes.jar','mysdk.jar')
-//}
-//
-//makeJar.dependsOn(build)
+// 输出jar包
+task makeJar(type: Copy) {
+    delete 'build/libs/zlibrary.jar' //删除已经存在的jar包
+    from('build/intermediates/bundles/release/')//从该目录下加载要打包的文件
+    into('build/libs/')//jar包的保存目录
+    include('classes.jar')//设置过滤，只打包classes文件
+    rename('classes.jar', 'zlibrary.jar')//重命名，mylibrary.jar 根据自己的需求设置
+}
+makeJar.dependsOn(build)

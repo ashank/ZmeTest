@@ -1,11 +1,10 @@
 apply plugin: 'com.android.application'
 //添加插件
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'kotlin-android'
+//apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
 
     defaultConfig {
         applicationId "com.funhotel.kotlin"
@@ -40,5 +39,5 @@ dependencies {
     implementation rootProject.ext.dependencies.ankosupport
     implementation rootProject.ext.dependencies.ankoappcompat
 
-    androidTestImplementation 'junit:junit:4.12'
+    androidTestImplementation 'junit:junit:4.13-beta-3'
 }

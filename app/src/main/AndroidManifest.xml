@@ -56,7 +56,12 @@
     android:theme="@style/NoTitleBarTheme">
     <activity
       android:name=".ui.activity.MainActivity"
-      android:screenOrientation="portrait"/>
+      android:screenOrientation="portrait">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
     <activity
       android:name=".ui.activity.presentation.PresentationActivity"
       android:screenOrientation="portrait"/>
@@ -65,11 +70,6 @@
       android:name=".ui.activity.WelcomeActivity"
       android:screenOrientation="portrait"
       android:theme="@style/FullscreenTheme">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
-
-        <category android:name="android.intent.category.LAUNCHER"/>
-      </intent-filter>
     </activity>
     <activity android:name=".ui.activity.RxJavaOkhttpActivity"/>
     <activity android:name=".ui.activity.GreenDaoActivity"/>
@@ -95,11 +95,9 @@
       android:name=".ui.activity.AdvanceWebActivity"
       android:theme="@style/NoTitleBarTheme">
     </activity>
-    <activity android:name=".ui.activity.RegistActivity">
-    </activity>
+    <activity android:name=".ui.activity.RegistActivity"/>
 
-    <activity android:name=".ui.activity.BannerDemoActivity">
-    </activity>
+    <activity android:name=".ui.activity.BannerDemoActivity"/>
   </application>
 
 </manifest>

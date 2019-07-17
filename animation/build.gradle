@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
 
     defaultConfig {
         applicationId "com.ashank.animation"
@@ -59,5 +58,5 @@ dependencies {
     //anfix
     implementation rootProject.ext.dependencies.andfix
     implementation project(':zlibrary')
-    androidTestImplementation 'junit:junit:4.12'
+    androidTestImplementation 'junit:junit:4.13-beta-3'
 }

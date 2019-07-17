@@ -25,11 +25,11 @@ class Main2Activity : AppCompatActivity() {
                 }
             }
 
-            var et = editText {
-                hint = "moren"
-                onClick {}
-                lparams {}
-            }
+//            var et = editText {
+//                hint = "moren"
+//                onClick {}
+//                lparams {}
+//            }
         }
 
 

@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
 
-    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+    FloatingActionButton fab =  findViewById(R.id.fab);
     fab.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
@@ -83,20 +83,20 @@ public class MainActivity extends AppCompatActivity
       }
     });
 
-    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+    DrawerLayout drawer =  findViewById(R.id.drawer_layout);
     ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
         this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
     drawer.addDrawerListener(toggle);
     toggle.syncState();
 
-    NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+    NavigationView navigationView =  findViewById(R.id.nav_view);
     navigationView.setNavigationItemSelectedListener(this);
 
     View view = navigationView.getHeaderView(0);
-    tvAdress = (TextView) view.findViewById(R.id.textView);
-    tvName = (TextView) view.findViewById(R.id.tv_name);
-    mRecyclerView = (RecyclerView) findViewById(R.id.rv_main_list);
-    mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
+    tvAdress =  view.findViewById(R.id.textView);
+    tvName =  view.findViewById(R.id.tv_name);
+    mRecyclerView =  findViewById(R.id.rv_main_list);
+    mSwipeRefreshLayout =  findViewById(R.id.refresh_layout);
 
     bluetoohHelper = BluetoohHelper.getInstance(this);
     bluetoohHelper.registerBluetoothReceiver(this, mBroadcastReceiver);
@@ -111,13 +111,14 @@ public class MainActivity extends AppCompatActivity
     if (open) {
       //本地设备信息
       showLocalBluetoothInfo();
-      devices = bluetoohHelper.getBondedDevicesList();
-      //已经连接的设备
-      if (null != devices && !devices.isEmpty()) {
-        LogUtils.e("devices size=" + devices.size());
-        recyclerViewAdapter.setList(devices);
-        recyclerViewAdapter.notifyDataSetChanged();
-      }
+//      devices = bluetoohHelper.getBondedDevicesList();
+//      //已经连接的设备
+//      if (null != devices && !devices.isEmpty()) {
+//        LogUtils.e("devices size=" + devices.size());
+//        recyclerViewAdapter.setList(devices);
+//        recyclerViewAdapter.notifyDataSetChanged();
+//      }
+
       //扫描设备
       bluetoohHelper.startDiscovery();
     }
@@ -203,9 +204,8 @@ public class MainActivity extends AppCompatActivity
     mRecyclerView.setLayoutManager(mLayoutManager);
     //分隔符
     /*mRecyclerView.addItemDecoration(new Line(this,Line.VERTICAL_LIST));*/
-    recyclerViewAdapter = new MainRecyclerViewAdapter(this,
-        devices, this);
-    //优化性能，设置ture 固定宽高，避免重新计算
+    recyclerViewAdapter = new MainRecyclerViewAdapter(this, devices, this);
+    //优化性能，设置 true 固定宽高，避免重新计算
     mRecyclerView.setHasFixedSize(true);
     mRecyclerView.setAdapter(recyclerViewAdapter);
   }
@@ -223,6 +223,7 @@ public class MainActivity extends AppCompatActivity
   private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
     @Override
     public void onReceive(Context context, Intent intent) {
+      LogUtils.e("mBroadcastReceiver:");
       bluetoohHelper.actionBluetooth(context, intent, actionBluetooth);
     }
   };
@@ -236,6 +237,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void actionFoundBluetoothDevice(BluetoothDevice bluetoothDevice) {
+      LogUtils.e("actionFoundBluetoothDevice==1===");
       if (null == bluetoothDevice || null == bluetoothDevice.getAddress()) {
         return;
       }

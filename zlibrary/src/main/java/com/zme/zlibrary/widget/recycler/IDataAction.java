@@ -41,6 +41,7 @@ public interface IDataAction<T> {
      */
     void deleteAllData();
 
+
     
     List<T> getData();
 }

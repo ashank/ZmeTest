@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 //添加kotlin插件
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'kotlin-android'
+//apply plugin: 'kotlin-android-extensions'
 //添加greenDao插件
 apply plugin: 'org.greenrobot.greendao'
 //引用
@@ -25,7 +25,6 @@ def releaseTime() {
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
     flavorDimensions "versionCode"
 
     //用于调用so文件使用，指定so文件的目录，默认是jniLibs，如果需要改变，在[]中写入so文件的路径
@@ -84,7 +83,7 @@ android {
         }
 
         release {
-            // releasw 模式下，关闭log
+            // release 模式下，关闭log
             buildConfigField("boolean", "LOG_DEBUG", "false")
             minifyEnabled true //是否混淆
             zipAlignEnabled true // 包优化
@@ -103,10 +102,7 @@ android {
                     }
                 }
             }
-
-
         }
-
     }
 
     // 为了解决部分第三方库重复打包了META-INF的问题
@@ -181,11 +177,8 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:design:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.android.support:support-vector-drawable:27.1.1'
-    implementation 'com.android.support:support-v4:27.1.1'
-    androidTestImplementation 'junit:junit:4.12'
+    androidTestImplementation 'junit:junit:4.13-beta-3'
     api project(':zlibrary')
 
     //ViewModel and LiveData
@@ -195,6 +188,9 @@ dependencies {
     // alternatively, just LiveData
     implementation "android.arch.lifecycle:livedata:1.1.1"
     annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+
+    compile'org.greenrobot:greendao:3.0.1'
+    compile'org.greenrobot:greendao-generator:3.0.0'
 
     // 若使用annotation需要单独引用,对于tinker的其他库都无需再引用
  /*   api("com.tinkerpatch.tinker:tinker-android-anno:1.9.8")

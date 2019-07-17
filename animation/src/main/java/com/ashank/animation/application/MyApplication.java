@@ -1,7 +1,7 @@
 package com.ashank.animation.application;
 
 import com.alipay.euler.andfix.patch.PatchManager;
-import com.antfortune.freeline.FreelineCore;
+//import com.antfortune.freeline.FreelineCore;
 import com.zme.zlibrary.base.BaseApplication;
 
 /**
@@ -18,7 +18,7 @@ public class MyApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        FreelineCore.init(this);
+//        FreelineCore.init(this);
 
         //热修复
 //      String appversion= getgetPackageManager().getPackageInfo(getPackageName(),0).versionName;

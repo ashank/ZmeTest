@@ -53,7 +53,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder
   public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     itemView = LayoutInflater.from(mContext).inflate(R.layout.item_main_list, parent,
         false);
-    return new MyViewHolder(itemView, mOnItemClickListner);
+    return new MyViewHolder(mContext,itemView, mOnItemClickListner);
   }
 
   @Override
@@ -94,8 +94,8 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder
     private TextView tvAdress;
     private TextView tvStatus;
 
-    public MyViewHolder(View itemView, OnItemClickListener onItemClickListner) {
-      super(itemView, onItemClickListner);
+    public MyViewHolder(Context context,View itemView, OnItemClickListener onItemClickListner) {
+      super(context,itemView, null,onItemClickListner,null,null);
       mTextView = (TextView) itemView.findViewById(R.id.item_tv_name);
       tvAdress = (TextView) itemView.findViewById(R.id.item_tv_adress);
       tvStatus = (TextView) itemView.findViewById(R.id.item_tv_state);

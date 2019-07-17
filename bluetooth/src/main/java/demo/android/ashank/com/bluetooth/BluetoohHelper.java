@@ -275,7 +275,6 @@ public class BluetoohHelper {
   public void registerBluetoothReceiver(Context context, BroadcastReceiver broadcastReceiver) {
     IntentFilter filter = new IntentFilter();
     filter.addAction(BluetoothA2dp.ACTION_CONNECTION_STATE_CHANGED);
-    filter.addAction(BluetoothA2dp.ACTION_PLAYING_STATE_CHANGED);
     filter.addAction(BluetoothDevice.ACTION_FOUND);
     filter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
     filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);

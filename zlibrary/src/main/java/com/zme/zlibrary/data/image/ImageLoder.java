@@ -77,7 +77,7 @@ public class ImageLoder {
     }
 
     public ImageLoder(Context context) {
-        weakReference = new WeakReference<Context>(context.getApplicationContext());
+        weakReference = new WeakReference<>(context.getApplicationContext());
     }
 
     private void init() {
@@ -444,10 +444,10 @@ public class ImageLoder {
                 .centerCrop()
                 .override(width, height)
                 .diskCacheStrategy(mDiskCacheStrategy)
-                .placeholder(placeholder)//设置占位图
-                .error(placeholder)//加载错误图
+                .placeholder(placeholder)
+                .error(placeholder)
                 .fitCenter()
-                .bitmapTransform(new CenterCrop(context), new RoundedCornersTransformation(context, dip2px(context, radius), margin))//加载圆角图
+                .bitmapTransform(new CenterCrop(context), new RoundedCornersTransformation(context, dip2px(context, radius), margin))
                 .into(imageAvatar);
     }
 
@@ -463,10 +463,10 @@ public class ImageLoder {
                 .load(url)
                 .centerCrop()
                 .diskCacheStrategy(mDiskCacheStrategy)
-                .placeholder(placeholder)//设置占位图
-                .error(placeholder)//加载错误图
+                .placeholder(placeholder)
+                .error(placeholder)
                 .fitCenter()
-                .bitmapTransform(new RoundedCornersTransformation(context, dip2px(context, 3), 0, type))//加载圆形图
+                .bitmapTransform(new RoundedCornersTransformation(context, dip2px(context, 3), 0, type))
                 .into(imageAvatar);
     }
 
@@ -478,7 +478,7 @@ public class ImageLoder {
      * @param imageAvatar
      * @param placeholder
      */
-    public void loadBliurImage(Context context, String url, ImageView imageAvatar, int placeholder, int radius) {
+    public void loadBlurImage(Context context, String url, ImageView imageAvatar, int placeholder, int radius) {
         if (null == imageAvatar) {
             return;
         }
@@ -491,10 +491,9 @@ public class ImageLoder {
                 .asBitmap()//加载静态图
                 .centerCrop()
                 .diskCacheStrategy(mDiskCacheStrategy)
-                .placeholder(placeholder)//设置占位图
-                .error(placeholder)//加载错误图
+                .placeholder(placeholder)
+                .error(placeholder)
                 .transform(new BlurTransformation(context, radius))
-//                .bitmapTransform(new BlurTransformation(context, radius))
                 .into(imageAvatar);
     }
 
@@ -690,35 +689,30 @@ public class ImageLoder {
      */
     public boolean clearCache(Context context) {
         try {
-            Glide.get(context.getApplicationContext()).clearMemory();//需要在主线程里执行
-            LogUtils.d(TAG + " ------------ Glide clearMemory -----------");
-            singleThreadExecutor.execute(new clearDiskCacheRunnerBle(context));
+            //需要在主线程里执行
+            Glide.get(context.getApplicationContext()).clearMemory();
+            singleThreadExecutor.execute(new ClearDiskCacheRunner(context));
         } catch (Exception e) {
             e.printStackTrace();
-            LogUtils.d(TAG + " ------------ 清理 Glide 缓存失败-----------");
             return false;
         }
         return true;
     }
 
     /**
-     * 清楚Glide DiskCache
-     *
-     * @author: LinWeiDong
+     * 清除Glide DiskCache
      */
-    private class clearDiskCacheRunnerBle implements Runnable {
+    private class ClearDiskCacheRunner implements Runnable {
         private Context mContext;
 
-        public clearDiskCacheRunnerBle(Context context) {
+        public ClearDiskCacheRunner(Context context) {
             mContext = context;
         }
 
         @Override
         public void run() {
-            Looper.prepare();
-            Glide.get(mContext.getApplicationContext()).clearDiskCache();//不能在主线程里执行
-            LogUtils.d(TAG + " ------------ Glide clearDiskCache -----------");
-            Looper.loop();
+            //不能在主线程里执行
+            Glide.get(mContext.getApplicationContext()).clearDiskCache();
         }
     }
 
@@ -760,10 +754,10 @@ public class ImageLoder {
         }
         Glide.with(context.getApplicationContext())
                 .load(url)
-                .asBitmap()//加载静态图
+                .asBitmap()
                 .fitCenter()
                 .diskCacheStrategy(mDiskCacheStrategy)
-                .error(placeholder)//加载错误图
+                .error(placeholder)
                 .listener(mRequestListener)
                 .into(imageView);
     }
@@ -791,14 +785,16 @@ public class ImageLoder {
         }
 
 
+        @Override
         protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
             return circleCrop(pool, toTransform);
         }
 
 
         private Bitmap circleCrop(BitmapPool pool, Bitmap source) {
-            if (source == null) return null;
-
+            if (source == null){
+                return null;
+            }
             int size = (int) (Math.min(source.getWidth(), source.getHeight()) - (mBorderWidth / 2));
             int x = (source.getWidth() - size) / 2;
             int y = (source.getHeight() - size) / 2;

@@ -5,13 +5,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * **********************************************************
+ * 保存数据到haredPreferences管理类
  *
  * @author zhiyahan
  * @version V1.0.0
- * @ClassName: SharedPreferencesManager
- * @Description: 保存数据到haredPreferences管理类
- * @date 2018-1-12 下午3:42:25 *********************************************************
+ * @date 2019-7-12 下午3:42:25
  */
 @SuppressLint("CommitPrefEdits")
 public class SharedPreferencesManager {
@@ -20,18 +18,17 @@ public class SharedPreferencesManager {
 
   private SharedPreferences.Editor editor;
 
-  public static final long DEFUALT_LONG_VALUES = 1L;
+  public static final long DEFAULT_LONG_VALUES = 1L;
 
-  private static final int DEFUALT_INTEGER_VALUES = 0;
+  private static final int DEFAULT_INTEGER_VALUES = 0;
 
-  private static final String PRES_NAME = "HUANLV";
+  private static final float DEFAULT_FLOAT_VALUES = 0.0f;
 
   public static final long VERSION_INTERNAL = 86400000L;
 
   private volatile static SharedPreferencesManager sharedPreferencesManager;
 
-
-  public SharedPreferencesManager(Context context, String shareName) {
+  private SharedPreferencesManager(Context context, String shareName) {
     sp = context.getSharedPreferences(shareName, Context.MODE_PRIVATE);
     editor = sp.edit();
   }
@@ -55,125 +52,115 @@ public class SharedPreferencesManager {
   }
 
   /**
-   * @param @param key
-   * @param @param value
-   * @return void
-   * @Title: putStringValue
-   * @Description: 以键值对的形式保存字符串
-   * @author zhiyahan
-   * @date 2018-1-8 下午4:12:04
-   * @History: author time version desc
+   * 以键值对的形式保存字符串
+   * @param  key 键名
+   * @param  value  键值
    */
   public void putStringValue(String key, String value) {
     editor = sp.edit();
     editor.putString(key, value);
-    editor.commit();
+    editor.apply();
   }
 
   /**
-   * @param @param key
-   * @param @param value
-   * @return void
-   * @Title: putBooleanValue
-   * @Description: 以键值对的形式保存boolean
-   * @author zhiyahan
-   * @date 2018-1-8 下午4:12:04
-   * @History: author time version desc
+   * 以键值对的形式保存boolean
+   * @param  key 键名
+   * @param  value  键值
    */
   public void putBooleanValue(String key, Boolean value) {
     editor = sp.edit();
     editor.putBoolean(key, value);
-    editor.commit();
+    editor.apply();
   }
 
   /**
-   * @param @param key
-   * @param @param value
-   * @return void
-   * @Title: putIntegerValue
-   * @Description: 以键值对的形式保存Integer
-   * @author zhiyahan
-   * @date 2018-1-8 下午4:15:48
-   * @History: author time version desc
-   */
+   * 以键值对的形式保存Integer
+   * @param  key 键名
+   * @param  value  键值
+   * */
   public void putIntegerValue(String key, Integer value) {
     editor = sp.edit();
     if (value == null) {
-      value = DEFUALT_INTEGER_VALUES;
+      value = DEFAULT_INTEGER_VALUES;
     }
     editor.putInt(key, value);
-    editor.commit();
+    editor.apply();
   }
 
   /**
-   * @param @param key
-   * @param @param value
-   * @return void
-   * @Title: putLongValue
-   * @Description: 以键值对的形式保存Long
-   * @author zhiyahan
-   * @date 2018-1-8 下午4:15:48
-   * @History: author time version desc
+   * 以键值对的形式保存Long
+   * @param  key 键名
+   * @param  value  键值
    */
   public void putLongValue(String key, Long value) {
     editor = sp.edit();
     if (value == null) {
-      value = DEFUALT_LONG_VALUES;
+      value = DEFAULT_LONG_VALUES;
     }
     editor.putLong(key, value);
-    editor.commit();
+    editor.apply();
   }
 
+
+
   /**
-   * @param @param key
+   * 以键值对的形式保存Float
+   * @param  key 键名
+   * @param  value  键值
+   */
+  public void putFloatValue(String key, float value) {
+    editor = sp.edit();
+    if (value == 0) {
+      value = DEFAULT_FLOAT_VALUES;
+    }
+    editor.putFloat(key, value);
+    editor.apply();
+  }
+
+
+
+  /**
+   * @param key 键值名
    * @return Boolean
-   * @Title: getBooleanValue
-   * @Description: 获取Boolean数据
-   * @author zhiyahan
-   * @date 2013-1-9 上午9:38:35
-   * @History: author time version desc
    */
   public Boolean getBooleanValue(String key) {
     return sp.getBoolean(key, false);
   }
 
   /**
-   * @param @param key
+   * 获取String数据
+   * @param  key 键名
    * @return String
-   * @Title: getStringValue
-   * @Description: 获取String数据
-   * @author zhiyahan
-   * @date 2013-1-9 上午9:39:10
-   * @History: author time version desc
    */
   public String getStringValue(String key) {
     return sp.getString(key, "");
   }
 
   /**
-   * @param @param key
+   * 获取Integer数据
+   * @param  key 键名
    * @return Integer
-   * @Title: getIntegerValue
-   * @Description: 获取Integer数据
-   * @author zhiyahan
-   * @date 2013-1-9 上午9:39:24
-   * @History: author time version desc
    */
   public int getIntegerValue(String key) {
-    return sp.getInt(key, DEFUALT_INTEGER_VALUES);
+    return sp.getInt(key, DEFAULT_INTEGER_VALUES);
   }
 
   /**
-   * @param @param key
+   * 获取Long数据
+   * @param  key 键名
    * @return Long
-   * @Title: getLongValue
-   * @Description: 获取Long数据
-   * @author zhiyahan
-   * @date 2013-1-9 上午9:40:28
-   * @History: author time version desc
    */
   public long getLongValue(String key) {
-    return sp.getLong(key, DEFUALT_LONG_VALUES);
+    return sp.getLong(key, DEFAULT_LONG_VALUES);
+  }
+
+  /**
+   * 获取Float数据
+   * @param  key 键名
+   * @return Long
+   */
+  public float getFloatValue(String key) {
+    return sp.getFloat(key, DEFAULT_FLOAT_VALUES);
   }
 
   /**
@@ -184,9 +171,12 @@ public class SharedPreferencesManager {
   }
 
 
+  /**
+   * 清除整个sp文件的缓存
+   */
   public void clearPreference() {
     editor = sp.edit();
     editor.clear();
-    editor.commit();
+    editor.apply();
   }
 }

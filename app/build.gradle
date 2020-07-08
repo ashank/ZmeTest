@@ -177,25 +177,23 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:support-vector-drawable:27.1.1'
-    androidTestImplementation 'junit:junit:4.13-beta-3'
+
     api project(':zlibrary')
+    androidTestImplementation 'junit:junit:4.13-beta-3'
 
-    //ViewModel and LiveData
-    implementation "android.arch.lifecycle:extensions:1.1.1"
-    // alternatively, just ViewModel
-    implementation "android.arch.lifecycle:viewmodel:1.1.1"
-    // alternatively, just LiveData
-    implementation "android.arch.lifecycle:livedata:1.1.1"
-    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+    implementation rootProject.ext.dependencies.vector_drawable
 
-    compile'org.greenrobot:greendao:3.0.1'
-    compile'org.greenrobot:greendao-generator:3.0.0'
+    implementation rootProject.ext.dependencies.lifecycle_extensions
+    implementation rootProject.ext.dependencies.lifecycle_viewmodel
+    implementation rootProject.ext.dependencies.lifecycle_livedata
+    annotationProcessor rootProject.ext.dependencies.lifecycle_compiler
+
+    implementation rootProject.ext.dependencies.greendao
+    implementation rootProject.ext.dependencies.greendao_generator
 
     // 若使用annotation需要单独引用,对于tinker的其他库都无需再引用
  /*   api("com.tinkerpatch.tinker:tinker-android-anno:1.9.8")
     implementation("com.tinkerpatch.sdk:tinkerpatch-android-sdk:1.2.8")*/
-
 
 }
 

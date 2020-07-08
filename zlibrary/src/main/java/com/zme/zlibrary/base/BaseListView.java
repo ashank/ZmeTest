@@ -35,10 +35,4 @@ public interface BaseListView extends BaseView {
      */
     void onLoadDataFailure(Object t,int pageIndex,int type);
 
-
-
-
-
-
-
 }

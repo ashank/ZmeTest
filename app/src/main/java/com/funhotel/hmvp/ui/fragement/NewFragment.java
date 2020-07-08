@@ -16,7 +16,9 @@
 
 package com.funhotel.hmvp.ui.fragement;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.arch.lifecycle.LifecycleOwner;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -114,7 +116,6 @@ public class NewFragment extends BaseFragment implements OnRefreshListener, NewV
         }
 
     }
-
 
 
     @Override

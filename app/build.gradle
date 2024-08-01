@@ -15,7 +15,7 @@ greendao {
 }
 
 //获取local.properties的内容
-Properties properties = new Properties()
+def  properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 //生成时间

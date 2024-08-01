@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.jakewharton.butterknife'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -42,10 +41,6 @@ dependencies {
 
     api rootProject.ext.dependencies.glide
     api rootProject.ext.dependencies.glidetransformations
-
-    /*butterknife*/
-    api rootProject.ext.dependencies.butterknife
-    annotationProcessor rootProject.ext.dependencies.butterknifeCompiler
 
     api rootProject.ext.dependencies.rxjava2
     api rootProject.ext.dependencies.rxandroid2
